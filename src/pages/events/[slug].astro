@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { getCollection, render } from 'astro:content';
+import { site } from '../../data/site';
+import { fullDay, eventEnds } from '../../data/helpers';
+
+export async function getStaticPaths() {
+  const events = await getCollection('events');
+  return events.map((e) => ({ params: { slug: e.id }, props: { event: e } }));
+}
+const { event } = Astro.props;
+const d = event.data;
+const { Content } = await render(event);
+const ends = eventEnds(event);
+const isPast = ends <= Date.now();
+---
+<Base title={d.title} description={d.summary} image={d.image}>
+  <section class="banner bg-navy">
+    <div style="position:absolute;inset:0"><Photo src={d.image} label="Event banner photo" eager dark /></div>
+    <div class="shade"></div>
+    <div class="wrap rel banner-in">
+      <a href="/events" class="back">← All events</a>
+      <div>
+        <span class="pill-tag" data-status data-ends={ends} data-reg={d.registration ? '1' : ''}>{d.tag}{!isPast && d.registration ? ' · Registrations open' : isPast ? ' · Past event' : ''}</span>
+        <h1 class="h1" style="margin-top:18px;font-size:clamp(56px,10vw,150px);line-height:.82;max-width:900px">{d.title}</h1>
+        <div class="facts">
+          <div><div class="k">Date</div><div class="v">{fullDay(d.date)}{d.time && ` · ${d.time}`}</div></div>
+          <div><div class="k">Venue</div><div class="v">{d.venue ?? d.city}</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap detail">
+    <div class="main">
+      <div>
+        <div class="eyebrow">About the event</div>
+        {d.lede && <p class="navy" style="margin:0 0 20px;font-size:clamp(20px,2vw,24px);line-height:1.45;font-weight:500;text-wrap:pretty">{d.lede}</p>}
+        <div class="prose"><Content /></div>
+      </div>
+
+      {d.guests.length > 0 && (
+        <div>
+          <h2 class="display" style="margin:0 0 24px;font-size:40px">Guests &amp; judges</h2>
+          <div class="guests">
+            {d.guests.map((g) => (
+              <div>
+                <div style="aspect-ratio:1;border-radius:50%;overflow:hidden"><Photo src={g.photo} label="Portrait" /></div>
+                <div style="margin-top:12px;font-weight:700;font-size:15px">{g.name}</div>
+                <div class="muted" style="font-size:13px">{g.role}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {d.agenda.length > 0 && (
+        <div>
+          <h2 class="display" style="margin:0 0 12px;font-size:40px">Agenda</h2>
+          {d.agenda.map((a) => (
+            <div class="ag">
+              <div class="display blue" style="font-size:24px">{a.time}</div>
+              <div><div style="font-weight:700;font-size:17px">{a.title}</div>{a.detail && <div class="muted" style="margin-top:4px;font-size:15px">{a.detail}</div>}</div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {d.gallery.length > 0 && (
+        <div>
+          <h2 class="display" style="margin:0 0 24px;font-size:40px">{isPast ? 'Photos' : 'From last year'}</h2>
+          <div class="gal">
+            {d.gallery.slice(0, 3).map((src, i) => <div class:list={['gal-i', { big: i === 0 }]}><Photo src={src} alt="" /></div>)}
+          </div>
+        </div>
+      )}
+    </div>
+
+    <aside class="side" data-form-wrap>
+      {d.registration && !isPast ? (
+        <>
+          <form data-form="event-registration" data-endpoint={site.formsEndpoint} data-email={site.email} novalidate style="display:flex;flex-direction:column;gap:16px">
+            <div class="display navy" style="font-size:34px;line-height:.95">Reserve your seat</div>
+            <p class="body" style="margin:0;font-size:15px;line-height:1.55">Free for students. Competitors register through their campus embassy.</p>
+            <input type="hidden" name="event" value={d.title} />
+            <input type="hidden" name="mode" value="Attend" />
+            <div class="seg" style="background:#fff;display:flex" data-select="single" data-input="mode">
+              <button aria-pressed="true" data-value="Attend" style="flex:1">Attend</button>
+              <button aria-pressed="false" data-value="Compete" style="flex:1">Compete</button>
+            </div>
+            <label class="field" data-validate="required"><span class="sr-only">Full name</span><input class="input" name="name" placeholder="Full name" autocomplete="name" /><span class="err">Please enter your name</span></label>
+            <label class="field" data-validate="email"><span class="sr-only">Email</span><input class="input" name="email" type="email" placeholder="Email" autocomplete="email" /><span class="err">Enter a valid email</span></label>
+            <label class="field"><span class="sr-only">Institution</span><input class="input" name="institution" placeholder="Institution" /></label>
+            <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button type="submit" class="btn btn-navy btn-block" data-cta>Get a free pass</button>
+            <div class="form-error" data-error hidden></div>
+          </form>
+          <div data-success hidden tabindex="-1" style="display:flex;flex-direction:column;gap:18px">
+            <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-size:26px;color:var(--navy)">✓</div>
+            <div class="display navy" style="font-size:34px;line-height:.95">You're in.</div>
+            <p class="body" style="margin:0;font-size:15px;line-height:1.55">We've got your registration. The organising team will confirm by email before {fullDay(d.date).replace(/^\w+, /, '')}.</p>
+          </div>
+        </>
+      ) : (
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="display navy" style="font-size:34px;line-height:.95">{isPast ? 'Missed this one?' : 'Want to take part?'}</div>
+          <p class="body" style="margin:0;font-size:15px;line-height:1.55">{isPast ? 'Join HOPE and be part of the next one. Membership drives run every January and July.' : 'Get in touch with the organising team, or join HOPE to help run it.'}</p>
+          <a href="/get-involved#join" class="btn btn-navy">Become a member</a>
+          <a href="/contact" class="btn btn-outline">Contact the team</a>
+        </div>
+      )}
+    </aside>
+  </section>
+</Base>
+
+<script>
+  import { wireForms, wireChips } from '../../scripts/forms';
+  wireChips(); wireForms();
+  const cta = document.querySelector<HTMLButtonElement>('[data-cta]');
+  document.querySelector('[data-select]')?.addEventListener('change', (e) => {
+    if (cta) cta.textContent = (e as CustomEvent).detail === 'Compete' ? 'Register to compete' : 'Get a free pass';
+  });
+</script>
+
+<style>
+  .banner { position: relative; min-height: clamp(480px,62vw,680px); display: flex; overflow: hidden; }
+  .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,36,87,.95) 0%, rgba(11,36,87,.7) 45%, rgba(11,36,87,.15) 100%); }
+  @media (max-width: 700px) { .shade { background: linear-gradient(180deg, rgba(11,36,87,.55) 0%, rgba(11,36,87,.92) 70%); } }
+  .banner-in { width: 100%; padding-top: clamp(32px,6vw,72px); padding-bottom: clamp(40px,6vw,72px); display: flex; flex-direction: column; justify-content: space-between; gap: 40px; }
+  .back { align-self: flex-start; color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.14); }
+  .back:hover { background: rgba(255,255,255,.24); color: #fff; }
+  .facts { display: flex; gap: 20px 28px; flex-wrap: wrap; margin-top: 28px; font-size: 16px; }
+  .k { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+  .v { margin-top: 4px; font-weight: 600; }
+  .detail { padding-top: clamp(56px,7vw,96px); padding-bottom: clamp(56px,7vw,96px); display: grid; grid-template-columns: minmax(0,2fr) minmax(300px,1fr); gap: 56px; align-items: start; }
+  @media (max-width: 900px) { .detail { grid-template-columns: 1fr; } }
+  .main { display: flex; flex-direction: column; gap: 64px; min-width: 0; }
+  .prose :global(p) { margin: 0 0 16px; font-size: 17px; line-height: 1.7; color: var(--text); }
+  .guests { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 20px; }
+  .ag { display: grid; grid-template-columns: 90px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .gal { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 180px 180px; gap: 12px; }
+  .gal-i { border-radius: 20px; overflow: hidden; }
+  .gal-i.big { grid-row: span 2; }
+  .side { border-radius: 28px; background: var(--sand); padding: clamp(24px,3vw,32px); position: sticky; top: 100px; }
+  @media (max-width: 900px) { .side { position: static; } }
+</style>

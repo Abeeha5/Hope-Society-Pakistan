@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import { clubs, otherDepartments } from '../data/content';
+---
+<Base title="Departments & Clubs" description="Every Hopian joins at least one department: Creative Arts & Literature, Media Cell, Administration, Peace League, or Volunteers & Internships.">
+  <PageHero crumb="Departments & clubs" title="Five ways" accent="to belong." lede="Every Hopian joins at least one department. That's where you learn a craft, meet your people and take on real responsibility." image="/images/monument-vests.jpg" imageLabel="Club activity photo" />
+
+  <section id="arts" class="bg-sand" style="scroll-margin-top:80px">
+    <div class="wrap" style="padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px)">
+      <div class="grid-auto" style="--min:380px;--gap:48px;margin-bottom:48px">
+        <div><div class="display d900 blue" style="font-size:22px">01</div><h2 class="display d900 navy" style="margin-top:10px;font-size:clamp(44px,5.5vw,80px);line-height:.88">Creative Arts &amp; Literature</h2></div>
+        <div style="align-self:end"><p class="body" style="margin:0;font-size:18px;line-height:1.6">The literary heart of HOPE. Five clubs that write, recite, paint, perform and publish, from open mics to the yearly newsletter.</p><div class="navy" style="margin-top:16px;font-size:14px;font-weight:700">What you'll do: run workshops, enter competitions, publish your work.</div></div>
+      </div>
+      <div class="clubs reveal">
+        {clubs.map((c) => (
+          <div class="club">
+            <div style="height:190px"><Photo src={c.photo} label="Club photo" /></div>
+            <div style="padding:20px"><div class="display navy" style="font-size:28px">{c.t}</div><div class="muted" style="margin-top:6px;font-size:14px;line-height:1.5">{c.d}</div></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="media" class="bg-navy" style="scroll-margin-top:80px">
+    <div class="wrap grid-auto" style="--min:380px;--gap:56px;align-items:center;padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px)">
+      <div>
+        <div class="display d900 gold" style="font-size:22px">02</div>
+        <h2 class="display d900" style="margin-top:10px;font-size:clamp(44px,5.5vw,80px);line-height:.88">Hope Media Cell</h2>
+        <p style="margin:24px 0 0;font-size:18px;line-height:1.6;color:rgba(255,255,255,.82);max-width:520px">The society's eye. Photographers, filmmakers, designers and social media writers who document every event and tell HOPE's story to 11k+ followers.</p>
+        <a href="/gallery" class="btn btn-gold" style="margin-top:32px">See their work</a>
+      </div>
+      <div class="media-disc">
+        <div class="media-logo"><img src="/images/hope-media-logo.png" alt="Hope Media Cell logo" loading="lazy" /></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(40px,5vw,72px)">
+    {otherDepartments.map((r) => (
+      <div id={r.anchor} class="dept reveal">
+        <div><div class="display d900 blue" style="font-size:22px">{r.n}</div><h2 class="display d900 navy" style="margin-top:10px;font-size:clamp(40px,4.6vw,64px);line-height:.9">{r.t}</h2></div>
+        <div><p class="body" style="margin:0">{r.d}</p><div class="muted" style="margin-top:20px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase">Teams</div><div class="navy" style="margin-top:6px;font-size:16px;font-weight:600">{r.u}</div></div>
+        <div style="height:240px;border-radius:24px;overflow:hidden"><Photo src={r.photo} label="Department photo" /></div>
+      </div>
+    ))}
+    <div style="padding-top:48px;display:flex;gap:12px;flex-wrap:wrap">
+      <a href="/get-involved#join" class="btn btn-navy">Join a department</a>
+      <a href="/faq" class="btn btn-outline">Questions? Read the FAQ</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .clubs { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; }
+  .club { border-radius: 24px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+  .media-disc { position: relative; aspect-ratio: 1; max-width: 520px; width: 100%; justify-self: center; border-radius: 50%; background: repeating-conic-gradient(rgba(246,194,50,.22) 0deg 1deg, transparent 1deg 6deg); display: grid; place-items: center; }
+  .media-logo { width: 62%; aspect-ratio: 1; border-radius: 50%; background: #fff; display: grid; place-items: center; overflow: hidden; }
+  .media-logo img { width: 92%; height: 92%; object-fit: contain; }
+  .dept { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,300px),1fr)); gap: 40px; padding: 56px 0; border-bottom: 1px solid var(--line); align-items: start; scroll-margin-top: 80px; }
+</style>

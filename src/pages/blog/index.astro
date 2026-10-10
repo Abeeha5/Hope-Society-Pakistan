@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Photo from '../../components/Photo.astro';
+import { site } from '../../data/site';
+import { getPosts, fmtDate, readingTime } from '../../data/helpers';
+
+const posts = await getPosts();
+const featured = posts.find((p) => p.data.featured) ?? posts[0];
+const rest = posts.filter((p) => p !== featured);
+const cats = ['All', 'Essay', 'Poetry', 'Event report', 'Newsletter'];
+---
+<Base title="Blog & Newsletter" description="The Hope Journal: essays, poetry, event reports and the yearly newsletter, written by members.">
+  <PageHero crumb="Blog" title="The Hope" accent="Journal." lede="Essays, poetry, event reports and the yearly newsletter, written by members." />
+
+  {featured && (
+    <section class="wrap" style="padding-top:48px;padding-bottom:48px">
+      <a href={`/blog/${featured.id}`} class="feat lift">
+        <div style="aspect-ratio:16/11;border-radius:28px;overflow:hidden"><Photo src={featured.data.cover} label="Featured article cover" /></div>
+        <div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="pill-tag">Featured · {featured.data.category}</span><span class="muted" style="font-size:13px">{readingTime(featured.body)} min read</span></div>
+          <h2 style="margin:18px 0 0;font-size:clamp(30px,3.6vw,48px);line-height:1.08;font-weight:700;letter-spacing:-.015em;text-wrap:balance">{featured.data.title}</h2>
+          {featured.data.excerpt && <p class="body" style="margin:18px 0 0;line-height:1.6">{featured.data.excerpt}</p>}
+          <div class="muted" style="margin-top:22px;font-size:14px"><strong style="color:var(--ink)">{featured.data.author}</strong>{featured.data.authorRole && ` · ${featured.data.authorRole.split(',')[0]}`} · {fmtDate(featured.data.date)}</div>
+        </div>
+      </a>
+    </section>
+  )}
+
+  <section class="wrap grid-auto" style="--min:300px;--gap:48px;align-items:start;padding-top:24px;padding-bottom:clamp(64px,8vw,112px)">
+    <div class="span2 min0">
+      <div class="chips" style="margin-bottom:12px" data-select="single" data-filter>
+        {cats.map((c, i) => <button class="chip solid" aria-pressed={i === 0 ? 'true' : 'false'} data-value={c}>{c}</button>)}
+      </div>
+      {rest.map((p) => (
+        <a href={`/blog/${p.id}`} class="row" data-cat={p.data.category}>
+          <div>
+            <div class="eyebrow" style="margin:0;letter-spacing:.12em">{p.data.category}</div>
+            <h3 style="margin:10px 0 0;font-size:clamp(19px,2vw,24px);line-height:1.25;font-weight:700;text-wrap:pretty">{p.data.title}</h3>
+            <div class="muted" style="margin-top:10px;font-size:14px">{p.data.author} · {fmtDate(p.data.date)}</div>
+          </div>
+          <div class="thumb"><Photo src={p.data.cover} label="" /></div>
+        </a>
+      ))}
+      <p class="muted" data-empty hidden style="padding:28px 0">No articles in this category yet.</p>
+    </div>
+    <aside style="display:flex;flex-direction:column;gap:14px">
+      <div class="news bg-navy">
+        <div class="rays" style="right:-80px;top:-80px;width:240px;height:240px;background:repeating-conic-gradient(rgba(246,194,50,.3) 0deg 1.5deg,transparent 1.5deg 8deg)"></div>
+        <div class="rel gold" style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase">Yearly newsletter</div>
+        <div class="rel display d900" style="margin-top:12px;font-size:52px;line-height:.86">HOPE<br />Annual<br />2026</div>
+        <p class="rel" style="margin:14px 0 0;font-size:14px;line-height:1.55;color:rgba(255,255,255,.75)">A year of events, poetry and people.</p>
+        <a href="/blog/hope-annual-newsletter-2026" class="rel btn btn-gold btn-sm" style="margin-top:18px">Read the newsletter</a>
+      </div>
+      <div class="sub" data-form-wrap>
+        <form data-form="newsletter" data-endpoint={site.formsEndpoint} data-email={site.email} novalidate>
+          <div class="display navy" style="font-size:30px;line-height:.95">Get the Journal by email</div>
+          <p class="muted" style="margin:8px 0 16px;font-size:14px;line-height:1.5">One email a month. No spam.</p>
+          <label class="field" data-validate="email"><span class="sr-only">Email</span><input class="input" style="height:50px" name="email" type="email" placeholder="you@email.com" autocomplete="email" /><span class="err">Enter a valid email</span></label>
+          <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button type="submit" class="btn btn-navy" style="margin-top:10px;width:100%">Subscribe</button>
+          <div class="form-error" data-error hidden></div>
+        </form>
+        <div data-success hidden tabindex="-1"><div class="display navy" style="font-size:30px;line-height:.95">You're subscribed ✓</div><p class="muted" style="margin:8px 0 0;font-size:14px">The next issue lands in your inbox.</p></div>
+      </div>
+    </aside>
+  </section>
+</Base>
+
+<script>
+  import { wireForms, wireChips } from '../../scripts/forms';
+  wireChips(); wireForms();
+  document.querySelector('[data-filter]')!.addEventListener('change', (e) => {
+    const c = (e as CustomEvent).detail;
+    let n = 0;
+    document.querySelectorAll<HTMLElement>('.row').forEach((r) => { r.hidden = !(c === 'All' || r.dataset.cat === c); if (!r.hidden) n++; });
+    document.querySelector<HTMLElement>('[data-empty]')!.hidden = n > 0;
+  });
+</script>
+
+<style>
+  .feat { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,420px),1fr)); gap: 40px; align-items: center; text-decoration: none; color: var(--ink); }
+  .feat:hover { color: var(--ink); }
+  .row { display: grid; grid-template-columns: 1fr 180px; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--line); text-decoration: none; color: var(--ink); align-items: center; }
+  .row:hover { color: var(--blue); }
+  .thumb { height: 124px; border-radius: 16px; overflow: hidden; }
+  @media (max-width: 560px) { .row { grid-template-columns: 1fr 96px; gap: 16px; } .thumb { height: 80px; } }
+  .news { border-radius: 28px; padding: 28px; position: relative; overflow: hidden; }
+  .sub { border-radius: 28px; background: var(--sand); padding: 28px; }
+</style>

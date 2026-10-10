@@ -1,0 +1,54 @@
+---
+/**
+ * Pakistan map rendered to static SVG at build time (no map libraries are
+ * shipped to visitors). Pins come from `chapters` in src/data/content.ts.
+ */
+import { geoMercator, geoPath } from 'd3-geo';
+import { feature } from 'topojson-client';
+import world from 'world-atlas/countries-50m.json';
+import { chapters } from '../data/content';
+
+const W = 800, H = 720;
+const topo = world as any;
+const all = (feature(topo, topo.objects.countries) as any).features as any[];
+const pk = all.find((f) => +f.id === 586);
+const neighbours = all.filter((f) => [4, 156, 356, 364].includes(+f.id));
+const proj = geoMercator().fitExtent([[24, 40], [W - 24, H - 16]], pk);
+const path = geoPath(proj);
+const r = (n: number) => 4 + 9 * Math.sqrt(n / 14);
+const pins = chapters.map(([city, prov, emb, lat, lng, hq]) => {
+  const [x, y] = proj([lng, lat])!;
+  return { city, prov, emb, hq: !!hq, x: +x.toFixed(1), y: +y.toFixed(1), r: +r(emb).toFixed(1) };
+});
+---
+<div class="map" data-map>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of Hope Society chapters across Pakistan">
+    <defs><clipPath id="pk-frame"><rect width={W} height={H} rx="16" /></clipPath></defs>
+    <g clip-path="url(#pk-frame)">
+      {neighbours.map((f) => <path d={path(f)} fill="#E7E5DC" stroke="#fff" stroke-width="1.5" />)}
+      <path d={path(pk)} fill="#fff" stroke="#1D4D9F" stroke-width="2" stroke-linejoin="round" />
+    </g>
+    {pins.map((p) => (
+      <g class="pin" data-city={p.city} data-prov={p.prov} transform={`translate(${p.x} ${p.y})`} tabindex="0" role="button" aria-label={`${p.city}: ${p.emb} embassies`}>
+        <circle class="halo" r={p.r + 8} fill="rgba(246,194,50,.35)" />
+        <circle r={p.r} fill={p.hq ? '#F6C232' : '#1D4D9F'} stroke="#fff" stroke-width="2.5" />
+        <circle r="22" fill="transparent" />
+      </g>
+    ))}
+  </svg>
+  <div class="tip" aria-hidden="true"><b></b><span></span></div>
+  <script type="application/json" data-pins set:html={JSON.stringify(pins.map(({ city, emb, hq, x, y }) => ({ city, emb, hq, x: x / W, y: y / H })))}></script>
+</div>
+
+<style>
+  .map { position: relative; width: 100%; aspect-ratio: 800 / 720; }
+  svg { display: block; width: 100%; height: 100%; }
+  .pin { cursor: pointer; transition: opacity .2s; outline: none; }
+  .pin .halo { opacity: 0; transition: opacity .2s; }
+  .pin.on .halo, .pin:focus-visible .halo { opacity: 1; }
+  .pin.dim { opacity: .22; }
+  .tip { position: absolute; pointer-events: none; transform: translate(-50%, calc(-100% - 18px)); background: var(--navy); color: #fff; padding: 10px 14px; border-radius: 12px; white-space: nowrap; box-shadow: 0 12px 30px rgba(11,36,87,.25); transition: left .2s, top .2s, opacity .2s; opacity: 0; }
+  .tip b { display: block; font-family: var(--display); font-weight: 900; font-size: 22px; line-height: 1; text-transform: uppercase; }
+  .tip span { display: block; margin-top: 4px; font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: .06em; }
+  .tip::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 12px; height: 12px; background: var(--navy); transform: translateX(-50%) rotate(45deg); }
+</style>

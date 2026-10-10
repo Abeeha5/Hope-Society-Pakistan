@@ -1,0 +1,228 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { stats } from '../data/site';
+import { departments, voices, homePrograms } from '../data/content';
+import { getPosts, getEvents, eventEnds, fmtMonth, monShort, dayNum } from '../data/helpers';
+
+const posts = (await getPosts()).slice(0, 2);
+const now = Date.now();
+const upcoming = (await getEvents()).filter((e) => eventEnds(e) > now);
+const flagship = upcoming.find((e) => e.id === 'iqbal-festival-2026') ?? upcoming[0];
+const badgeEvent = upcoming.find((e) => e.data.registration) ?? upcoming[0];
+---
+<Base footerCta>
+  <!-- HERO -->
+  <section class="bg-navy rel" style="overflow:hidden">
+    <div class="rays" style="left:50%;top:-8%;width:1800px;height:1800px;transform:translateX(-12%);background:repeating-conic-gradient(from 0deg,rgba(246,194,50,.10) 0deg .8deg,transparent .8deg 5deg);-webkit-mask:radial-gradient(circle,#000 0 30%,transparent 62%);mask:radial-gradient(circle,#000 0 30%,transparent 62%)"></div>
+    <div class="wrap rel hero">
+      <div style="padding-bottom:clamp(40px,6vw,96px)">
+        <h1 class="h1" style="font-size:clamp(64px,9.4vw,148px)">Rebuild<br />Pakistan<br /><span class="gold">with hope.</span></h1>
+        <p class="lede" style="margin:28px 0 0;color:rgba(255,255,255,.8);max-width:520px">We're a youth-led society nurturing conscious young people, sharp minds and responsible leaders through Harmony, Opportunity, Patriotism and Empowerment.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:36px">
+          <a href="/get-involved#join" class="btn btn-gold">Become a member</a>
+          <a href="/get-involved#path" class="btn btn-outline-light">Volunteer with us</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <div class="arch-top"><Photo src="/images/monument-vests.jpg" alt="Hope Society volunteers in matching vests at a national monument" eager /></div>
+        {badgeEvent && (
+          <a href={`/events/${badgeEvent.id}`} class="badge">
+            <div class="badge-dot">H</div>
+            <div><div style="font-weight:700;font-size:15px">{badgeEvent.data.title}</div><div style="font-size:13px;color:var(--muted)">{badgeEvent.data.registration ? 'Registrations open' : `${dayNum(badgeEvent.data.date)} ${monShort(badgeEvent.data.date)}`} · {badgeEvent.data.city}</div></div>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="bg-gold">
+    <div class="wrap stats">
+      {stats.map((s) => (
+        <div class="stat">
+          <div class="display d900 num" data-count={s.n} data-suffix={s.suffix}>{s.n.toLocaleString()}{s.suffix}</div>
+          <div class="lbl">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- WHO WE ARE -->
+  <section class="wrap" style="padding-top:clamp(72px,9vw,128px);padding-bottom:clamp(72px,9vw,128px)">
+    <div class="grid-auto reveal" style="--min:420px;--gap:56px">
+      <div>
+        <div class="eyebrow">Article 02 · Who we are</div>
+        <h2 class="display h2">An ideal society starts with an ideal individual.</h2>
+        <p class="body" style="margin:24px 0 0;font-size:18px;max-width:520px">HOPE is a socio-cultural platform where young minds grow regardless of nationality or religion. Our whole philosophy rests on two pillars.</p>
+        <a href="/about" class="link-underline" style="margin-top:28px">Read our story</a>
+      </div>
+      <div style="display:grid;gap:16px">
+        <div class="pillar" style="background:var(--sand)">
+          <div class="roman blue">I</div>
+          <div><h3 class="display" style="font-size:34px">Justice</h3><p class="body" style="margin:8px 0 0;font-size:16px">Giving every person their due, without discrimination. Not control by force, but an inner strength guided by conscience.</p></div>
+        </div>
+        <div class="pillar" style="background:var(--blue);color:#fff">
+          <div class="roman gold">II</div>
+          <div><h3 class="display" style="font-size:34px">Awareness</h3><p style="margin:8px 0 0;font-size:16px;line-height:1.6;color:rgba(255,255,255,.82)">Turning knowledge into practice. Freedom from blind imitation, and the critical thinking to choose a better course.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section class="bg-sand">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <div><div class="eyebrow" style="margin-bottom:14px">Flagship programs</div><h2 class="display h2">Where it happens</h2></div>
+        <a href="/events" class="btn btn-outline btn-sm">All programs</a>
+      </div>
+      <div class="prog reveal">
+        {flagship && (
+          <a href={`/events/${flagship.id}`} class="prog-feature lift">
+            <div style="position:absolute;inset:0"><Photo src={flagship.data.image} alt="" label="Event photo" dark /></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,36,87,0) 35%,rgba(11,36,87,.92) 100%)"></div>
+            <div class="rel" style="margin-top:auto;padding:clamp(24px,3vw,36px)">
+              <span class="pill-tag">Upcoming · {dayNum(flagship.data.date)} {monShort(flagship.data.date)}</span>
+              <h3 class="display d900" style="margin:16px 0 0;font-size:clamp(44px,5vw,72px);line-height:.88">{flagship.data.title.replace(/\s\d{4}$/, '')}</h3>
+              <p style="margin:12px 0 0;font-size:16px;line-height:1.55;color:rgba(255,255,255,.82);max-width:440px">Poetry, debate and art celebrating the poet of the East, run by students across chapters.</p>
+            </div>
+          </a>
+        )}
+        <div class="prog-grid">
+          {homePrograms.map((p) => (
+            <a href={p.href} class="prog-card lift">
+              <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--muted)"><span>{p.n}</span><span>{p.when}</span></div>
+              <h3 class="display navy" style="margin:auto 0 0;font-size:clamp(30px,3vw,38px)">{p.t}</h3>
+              <p class="body" style="margin:0;font-size:15px;line-height:1.55">{p.d}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPARTMENTS -->
+  <section class="wrap sec">
+    <div class="grid-auto" style="--min:360px;--gap:56px;align-items:start">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px">Departments &amp; clubs</div>
+        <h2 class="display h2">Find your corner of HOPE.</h2>
+        <p class="body" style="margin:20px 0 0;max-width:400px">Poets, filmmakers, organisers, athletes. Every member joins a club and learns by doing.</p>
+      </div>
+      <div class="span2 min0" style="border-top:1px solid var(--line-2)">
+        {departments.map((d) => (
+          <a href={`/departments#${d.anchor}`} class="dept-row">
+            <span class="display blue" style="font-size:22px">{d.n}</span>
+            <span><span class="display" style="display:block;font-size:clamp(24px,2.6vw,30px);line-height:1">{d.t}</span><span style="display:block;margin-top:6px;font-size:15px;color:var(--muted)">{d.s}</span></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICES + JOURNAL -->
+  <section class="wrap voices" style="padding-bottom:var(--sec)">
+    <div class="voices-head">
+      <div><div class="eyebrow" style="margin-bottom:14px">Voices of HOPE</div><h2 class="display h2">Hopians, in their own words.</h2></div>
+      <div class="voice-btns" role="tablist" aria-label="Testimonials">
+        {voices.map((_, i) => <button role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-voice={i}>0{i + 1}</button>)}
+      </div>
+    </div>
+    <div class="voice-wrap">
+      {voices.map((v, i) => (
+        <figure class="voice" data-voice-panel={i} hidden={i !== 0}>
+          <div class="rays" style="right:-140px;bottom:-140px;width:420px;height:420px;background:repeating-conic-gradient(rgba(246,194,50,.28) 0deg 1.2deg,transparent 1.2deg 7deg);-webkit-mask:radial-gradient(circle,transparent 0 22%,#000 23% 50%,transparent 70%);mask:radial-gradient(circle,transparent 0 22%,#000 23% 50%,transparent 70%)"></div>
+          <div class="voice-photo"><Photo src={v.photo} label="Portrait" dark /></div>
+          <div class="rel" style="display:flex;flex-direction:column;gap:24px">
+            <div class="display d900 gold" style="font-size:110px;line-height:.5;height:44px" aria-hidden="true">“</div>
+            <blockquote style="margin:0;font-size:clamp(21px,2.2vw,30px);line-height:1.35;font-weight:500;text-wrap:pretty">{v.q}</blockquote>
+            <figcaption style="display:flex;flex-direction:column;gap:4px;padding-top:20px;border-top:1px solid rgba(255,255,255,.16)"><strong style="font-size:17px">{v.name}</strong><span class="gold" style="font-size:14px;font-weight:600">{v.role}</span></figcaption>
+          </div>
+        </figure>
+      ))}
+    </div>
+    <div class="journal">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><span class="eyebrow muted" style="margin:0;color:var(--muted)">From the journal</span><a href="/blog" style="font-size:14px;font-weight:700;text-decoration:none">All articles</a></div>
+      {posts.map((p) => (
+        <a href={`/blog/${p.id}`} class="jcard lift">
+          <div style="height:150px;border-radius:16px;overflow:hidden"><Photo src={p.data.cover} label="Article cover" /></div>
+          <div style="display:flex;gap:10px;font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.08em"><span>{p.data.category}</span><span class="muted">{fmtMonth(p.data.date)}</span></div>
+          <h3 style="margin:0;font-size:19px;line-height:1.3;font-weight:700;text-wrap:pretty">{p.data.title}</h3>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Count-up animation for the stats strip.
+  const nums = document.querySelectorAll<HTMLElement>('[data-count]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    nums.forEach((el) => (el.textContent = '0' + el.dataset.suffix));
+    const io = new IntersectionObserver((entries) => {
+      if (!entries.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      const t0 = performance.now(), D = 1600;
+      const step = (t: number) => {
+        const k = Math.min(1, (t - t0) / D), e = 1 - Math.pow(1 - k, 3);
+        nums.forEach((el) => (el.textContent = Math.round(+el.dataset.count! * e).toLocaleString() + el.dataset.suffix));
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+    nums.forEach((el) => io.observe(el));
+  }
+
+  // Testimonial switcher.
+  const btns = document.querySelectorAll<HTMLButtonElement>('[data-voice]');
+  btns.forEach((b) => b.addEventListener('click', () => {
+    btns.forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+    document.querySelectorAll<HTMLElement>('[data-voice-panel]').forEach((p) => (p.hidden = p.dataset.voicePanel !== b.dataset.voice));
+  }));
+</script>
+
+<style>
+  .hero { padding-top: clamp(48px,7vw,96px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,460px),1fr)); gap: 48px; align-items: end; }
+  .hero-img { position: relative; justify-self: center; width: min(100%,560px); aspect-ratio: 5/6; }
+  .arch-top { position: absolute; inset: 0; border-radius: 999px 999px 0 0; overflow: hidden; background: var(--blue); }
+  .badge { position: absolute; left: -28px; bottom: 48px; background: #fff; color: var(--navy); border-radius: 18px; padding: 16px 18px; display: flex; gap: 14px; align-items: center; box-shadow: 0 20px 50px rgba(0,0,0,.25); text-decoration: none; transition: transform .2s; }
+  .badge:hover { transform: translateY(-3px); color: var(--navy); }
+  .badge-dot { width: 44px; height: 44px; flex: none; border-radius: 50%; background: var(--gold); display: grid; place-items: center; font-family: var(--display); font-weight: 900; font-size: 20px; }
+  @media (max-width: 640px) { .badge { left: 12px; right: 12px; bottom: 24px; } }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); }
+  .stat { padding: 30px 18px 28px; border-left: 1px solid rgba(11,36,87,.18); }
+  .num { font-size: clamp(44px,4.6vw,64px); line-height: .9; font-variant-numeric: tabular-nums; }
+  .lbl { margin-top: 8px; font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  @media (max-width: 520px) { .stats { grid-template-columns: repeat(2, 1fr); } .stat { border-top: 1px solid rgba(11,36,87,.12); } }
+
+  .pillar { border-radius: 24px; padding: clamp(24px,3vw,32px); display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: start; }
+  .roman { font-family: var(--display); font-weight: 900; font-size: 64px; line-height: .8; }
+
+  .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+  .prog { display: flex; flex-wrap: wrap; gap: 20px; }
+  .prog-feature { flex: 1 1 520px; min-width: 0; position: relative; border-radius: 28px; overflow: hidden; min-height: 520px; background: var(--navy); text-decoration: none; color: #fff; display: flex; }
+  .prog-feature:hover { color: #fff; }
+  .prog-grid { flex: 1 1 520px; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; }
+  .prog-card { border-radius: 24px; background: #fff; padding: clamp(20px,2.4vw,28px); text-decoration: none; color: var(--ink); display: flex; flex-direction: column; gap: 14px; min-height: 250px; }
+  @media (max-width: 640px) { .prog-feature { min-height: 440px; } .prog-grid { grid-template-columns: 1fr; } .prog-card { min-height: 200px; } }
+
+  .dept-row { display: grid; grid-template-columns: 56px 1fr; gap: 20px; align-items: center; padding: 26px 8px; border-bottom: 1px solid var(--line-2); text-decoration: none; color: var(--ink); transition: padding .2s, background .2s; }
+  .dept-row:hover { padding-left: 20px; background: var(--sand); color: var(--ink); }
+
+  .voices { display: flex; flex-wrap: wrap; gap: 20px; align-items: stretch; }
+  .voices-head { flex: 1 1 100%; display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; }
+  .voice-btns { display: flex; gap: 8px; }
+  .voice-btns button { width: 48px; height: 48px; border-radius: 50%; cursor: pointer; font: 800 16px var(--display); border: 1.5px solid rgba(18,25,51,.18); background: #fff; color: var(--navy); }
+  .voice-btns button:hover { border-color: var(--navy); }
+  .voice-btns button[aria-selected="true"] { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .voice-wrap { flex: 2 1 620px; min-width: 0; display: flex; }
+  .voice { flex: 1; margin: 0; border-radius: 32px; background: var(--navy); color: #fff; padding: clamp(24px,3vw,40px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,240px),1fr)); gap: clamp(24px,3vw,44px); align-items: center; position: relative; overflow: hidden; }
+  .voice-photo { position: relative; aspect-ratio: 4/5; border-radius: 999px 999px 24px 24px; overflow: hidden; background: var(--blue); }
+  @media (max-width: 640px) { .voice-photo { max-width: 240px; } }
+  .journal { flex: 1 1 300px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+  .jcard { flex: 1; display: flex; flex-direction: column; gap: 14px; padding: 14px; border-radius: 24px; background: var(--sand); text-decoration: none; color: var(--ink); }
+  .jcard:hover { background: var(--mist); color: var(--ink); }
+</style>

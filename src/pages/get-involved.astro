@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+
+const path = [
+  { n: 1, t: 'Change Maker', d: 'Volunteer at events, join a club and learn how HOPE runs from the inside.', req: 'Open to every new member', h: 320, sun: 90 },
+  { n: 2, t: 'Peace Maker', d: 'Lead a team, organise a campaign and represent your embassy at chapter level.', req: 'After two successful events', h: 400, sun: 150 },
+  { n: 3, t: 'Shaheen', d: "Mentor new members, sit on a cabinet and shape the society's annual program.", req: 'Two years of active membership', h: 480, sun: 220 },
+];
+const interests = ['Writing & Reading', 'Poetry', 'Art', 'Music', 'Dramatics', 'Media Cell', 'Peace League', 'Outreach'];
+---
+<Base title="Get Involved" description="Become a Hopian. Membership is free and open to every student, regardless of race, colour, religion, language or sect.">
+  <PageHero crumb="Get involved" title="Don't wait for a saviour." accent="Be one." lede="Membership is open to every student linked to a school, college or university, regardless of race, colour, religion, language or sect." image="/images/minar-e-pakistan.jpg" imageLabel="Volunteers at an event" />
+
+  <section id="path" class="bg-navy" style="scroll-margin-top:80px">
+    <div class="wrap" style="padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px)">
+      <div class="eyebrow gold">The volunteer path</div>
+      <h2 class="display h2-xl" style="margin:0 0 56px">Rise in three stages</h2>
+      <div class="path reveal">
+        {path.map((p) => (
+          <div class="stage" style={`--h:${p.h}px`}>
+            <div class="sun" style={`width:${p.sun}px;height:${p.sun}px;top:${-p.sun / 2}px`}></div>
+            <div style="font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)">Stage {p.n}</div>
+            <div class="display d900" style="font-size:clamp(44px,4.4vw,64px);line-height:.9">{p.t}</div>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:rgba(255,255,255,.82)">{p.d}</p>
+            <div style="font-size:14px;color:rgba(255,255,255,.6);padding-top:12px;border-top:1px solid rgba(255,255,255,.12)">{p.req}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="join" class="wrap grid-auto" style="--min:380px;--gap:56px;align-items:start;padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px);scroll-margin-top:80px">
+    <div>
+      <div class="eyebrow">Sign up</div>
+      <h2 class="display h2">Takes two minutes.</h2>
+      <p class="body" style="margin:20px 0 0;max-width:440px">Membership drives run every January and July. Apply anytime and we'll place you in the next intake. Your chapter coordinator will be in touch within a week.</p>
+      <div class="qrbox">
+        <div class="qr"><img src="/images/qr-join.svg" alt="QR code for this form" width="72" height="72" /></div>
+        <div class="body" style="font-size:14px;line-height:1.5">On a poster? This code opens this form on any phone. Download it for print from <a href="/images/qr-join.svg" download>here</a>.</div>
+      </div>
+    </div>
+    <div class="formcard" data-form-wrap>
+      <form data-form="membership" data-endpoint={site.formsEndpoint} data-email={site.email} novalidate>
+        <div class="two">
+          <label class="field" data-validate="required">Full name *<input class="input" name="name" placeholder="Ali Raza" autocomplete="name" /><span class="err">Please enter your name</span></label>
+          <label class="field" data-validate="email">Email *<input class="input" name="email" type="email" placeholder="you@email.com" autocomplete="email" /><span class="err">Enter a valid email</span></label>
+          <label class="field" data-validate="phone">Phone *<input class="input" name="phone" type="tel" placeholder="03xx xxxxxxx" autocomplete="tel" /><span class="err">Add a phone number</span></label>
+          <label class="field">City<input class="input" name="city" placeholder="Islamabad" autocomplete="address-level2" /></label>
+          <label class="field full">Institution<input class="input" name="institution" placeholder="School, college or university" /></label>
+        </div>
+        <div style="margin-top:22px;font-size:14px;font-weight:700" id="int-label">I'm interested in</div>
+        <div class="chips" style="margin-top:10px" data-select="multi" data-chips="interests" role="group" aria-labelledby="int-label">
+          {interests.map((t) => <button aria-pressed={t === 'Poetry' ? 'true' : 'false'} class="chip">{t}</button>)}
+        </div>
+        <label class="field" style="margin-top:22px">Anything you'd like us to know?<textarea class="input" name="message" rows="3" placeholder="Optional"></textarea></label>
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button type="submit" class="btn btn-navy btn-block" style="margin-top:26px">Send my application</button>
+        <div class="form-error" data-error hidden></div>
+        <p class="form-note">Open to all, without discrimination of any kind.</p>
+      </form>
+      <div data-success hidden tabindex="-1" style="text-align:center;padding:40px 0">
+        <div class="burst"></div>
+        <h3 class="display d900 navy" style="margin:24px 0 0;font-size:56px;line-height:.9">Welcome, <span data-first-name>Hopian</span>.</h3>
+        <p class="body" style="margin:14px auto 0;max-width:380px">Your application is in. Look out for an email from your chapter coordinator before the next drive.</p>
+        <button type="button" class="btn btn-outline btn-sm" style="margin-top:24px" data-reset>Submit another</button>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { wireForms, wireChips } from '../scripts/forms';
+  wireChips(); wireForms();
+</script>
+
+<style>
+  .path { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,300px),1fr)); gap: 16px; align-items: end; }
+  .stage { border-radius: 28px 28px 0 0; background: rgba(255,255,255,.06); padding: 32px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; min-height: var(--h); position: relative; overflow: hidden; border-top: 3px solid var(--gold); }
+  @media (max-width: 700px) { .stage { min-height: 0; padding-top: 100px; } }
+  .sun { position: absolute; left: 32px; border-radius: 50%; background: radial-gradient(circle, #F6C232 0 38%, transparent 39%), repeating-conic-gradient(rgba(246,194,50,.5) 0deg 2deg, transparent 2deg 10deg); -webkit-mask: radial-gradient(circle, #000 0 60%, transparent 70%); mask: radial-gradient(circle, #000 0 60%, transparent 70%); }
+  .qrbox { margin-top: 32px; display: flex; gap: 16px; align-items: center; padding: 20px; border-radius: 20px; background: var(--sand); max-width: 440px; }
+  .qr { width: 96px; height: 96px; flex: none; border-radius: 12px; background: #fff; display: grid; place-items: center; }
+  .formcard { border-radius: 28px; border: 1.5px solid rgba(18,25,51,.1); padding: clamp(22px,3.5vw,44px); min-width: 0; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; }
+  .full { grid-column: 1 / -1; }
+  .burst { width: 96px; height: 96px; margin: 0 auto; border-radius: 50%; background: radial-gradient(circle, #F6C232 0 40%, transparent 41%), repeating-conic-gradient(rgba(246,194,50,.7) 0deg 3deg, transparent 3deg 12deg); }
+</style>

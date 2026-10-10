@@ -1,0 +1,13 @@
+---
+/**
+ * Shows a photo if `src` is given, otherwise a branded placeholder box with
+ * a label, so missing photos are obvious but still look intentional.
+ */
+interface Props { src?: string; alt?: string; label?: string; dark?: boolean; position?: string; eager?: boolean; class?: string; }
+const { src, alt = '', label = 'Photo', dark = false, position, eager = false, class: cls = '' } = Astro.props;
+---
+<div class={`photo ${cls}`}>
+  {src
+    ? <img src={src} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" style={position ? `object-position:${position}` : undefined} />
+    : <div class:list={['photo-ph', { dark }]} role="img" aria-label={label}>{label}</div>}
+</div>

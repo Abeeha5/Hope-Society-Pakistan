@@ -1,0 +1,15 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+---
+<Legal title="Terms" updated="October 2026">
+  <p class="note">Starter text. Have someone on the cabinet review it before launch.</p>
+  <h2>Using this site</h2>
+  <p>This website is run by Hope Society Pakistan, a volunteer youth organisation. You're welcome to read, share and link to anything here.</p>
+  <h2>Library</h2>
+  <p>Books in the library are either in the public domain, published by Hope Society Pakistan, or shared with the rights holder's permission. They're provided free for personal reading and study. If you believe something here infringes your rights, email <a href={`mailto:${site.email}`}>{site.email}</a> and we'll remove it promptly.</p>
+  <h2>Articles and photos</h2>
+  <p>Articles in The Hope Journal belong to their authors. Photos are by Hope Media Cell unless credited otherwise. Please ask before reusing them.</p>
+  <h2>Donations</h2>
+  <p>Donations go directly to the society's accounts listed on the Support page and are used for events, workshops and student materials. Receipts are sent by email on request.</p>
+</Legal>

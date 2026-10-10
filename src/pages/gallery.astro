@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+import { gallery, featuredFilm } from '../data/content';
+import { site } from '../data/site';
+const cats = ['All', 'Events', 'Clubs', 'Peace League'];
+const film = featuredFilm;
+---
+<Base title="Gallery & Media" description="Every event, captured by Hope Media Cell.">
+  <PageHero crumb="Gallery & media" title="Through" accent="our lens." lede={`Every event, captured by Hope Media Cell. Follow @${site.socials.instagram.label} for more.`} />
+
+  <section class="wrap" style="padding-top:clamp(48px,6vw,80px)">
+    <div class="film">
+      <div style="position:absolute;inset:0" data-film-poster><Photo src={film.poster} label="Video still" dark /></div>
+      <div class="film-over" data-film-over>
+        <div style="color:#fff"><div class="gold" style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase">Featured film · {film.length}</div><div class="display d900" style="margin-top:8px;font-size:clamp(36px,4.4vw,60px);line-height:.9">{film.title}</div></div>
+        {film.youtubeId
+          ? <button type="button" class="play" aria-label={`Play ${film.title}`} data-play={film.youtubeId}>▶</button>
+          : <a class="play" href={site.socials.youtube.url} target="_blank" rel="noopener" aria-label="Watch on YouTube">▶</a>}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top:48px;padding-bottom:clamp(64px,8vw,112px)">
+    <div class="chips" style="margin-bottom:28px" data-select="single" data-filter>
+      {cats.map((c, i) => <button class="chip" aria-pressed={i === 0 ? 'true' : 'false'} data-value={c}>{c}</button>)}
+    </div>
+    <div class="wall">
+      {gallery.map((g, i) => (
+        <figure class="tile" style={`--h:${g.h}px`} data-cat={g.cat}>
+          {g.photo ? <button type="button" class="open" data-full={g.photo} data-cap={g.cap} aria-label={`View ${g.cap}`}><Photo src={g.photo} alt={g.cap} /></button> : <Photo label={g.cap} />}
+          <figcaption>{g.cap}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <dialog class="lightbox" aria-label="Photo viewer">
+    <form method="dialog"><button class="close" aria-label="Close">×</button></form>
+    <img alt="" />
+    <p></p>
+  </dialog>
+</Base>
+
+<script>
+  document.querySelector('[data-filter]')!.addEventListener('change', (e) => {
+    const c = (e as CustomEvent).detail;
+    document.querySelectorAll<HTMLElement>('.tile').forEach((t) => (t.hidden = !(c === 'All' || t.dataset.cat === c)));
+  });
+  import { wireChips } from '../scripts/forms';
+  wireChips();
+
+  const dlg = document.querySelector<HTMLDialogElement>('.lightbox')!;
+  document.querySelectorAll<HTMLButtonElement>('.open').forEach((b) => b.addEventListener('click', () => {
+    dlg.querySelector('img')!.src = b.dataset.full!;
+    dlg.querySelector('img')!.alt = b.dataset.cap!;
+    dlg.querySelector('p')!.textContent = b.dataset.cap!;
+    dlg.showModal();
+  }));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+
+  document.querySelector<HTMLButtonElement>('[data-play]')?.addEventListener('click', (e) => {
+    const id = (e.currentTarget as HTMLElement).dataset.play;
+    const box = document.querySelector('.film')!;
+    box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1" title="Featured film" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>`;
+  });
+</script>
+
+<style>
+  .film { position: relative; height: clamp(300px,46vw,600px); border-radius: 28px; overflow: hidden; background: var(--navy); }
+  .film-over { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; padding: clamp(20px,3vw,32px); background: linear-gradient(180deg, transparent 40%, rgba(11,36,87,.88)); flex-wrap: wrap; }
+  .play { width: 84px; height: 84px; border-radius: 50%; background: var(--gold); display: grid; place-items: center; color: var(--navy); font-size: 28px; cursor: pointer; box-shadow: 0 0 0 12px rgba(246,194,50,.25); border: 0; text-decoration: none; transition: transform .2s; }
+  .play:hover { transform: scale(1.06); color: var(--navy); }
+  .wall { columns: 3 280px; column-gap: 14px; }
+  .tile { position: relative; margin: 0 0 14px; height: var(--h); border-radius: 20px; overflow: hidden; break-inside: avoid; }
+  @media (max-width: 640px) { .tile { height: calc(var(--h) * .8); } }
+  .open { all: unset; display: block; width: 100%; height: 100%; cursor: zoom-in; }
+  .open:focus-visible { outline: 3px solid var(--gold); outline-offset: -3px; }
+  .open :global(img) { transition: transform .4s; }
+  .open:hover :global(img) { transform: scale(1.04); }
+  figcaption { position: absolute; left: 12px; bottom: 12px; padding: 6px 10px; border-radius: 999px; white-space: nowrap; background: rgba(255,255,255,.92); font-size: 12px; font-weight: 700; color: var(--navy); pointer-events: none; }
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw,1200px); max-height: 92vh; }
+  .lightbox::backdrop { background: rgba(11,36,87,.9); }
+  .lightbox img { max-width: 100%; max-height: 82vh; border-radius: 16px; margin: 0 auto; }
+  .lightbox p { color: #fff; text-align: center; font-weight: 700; margin: 12px 0 0; }
+  .close { position: fixed; top: 16px; right: 16px; width: 48px; height: 48px; border-radius: 50%; border: 0; background: #fff; color: var(--navy); font-size: 28px; cursor: pointer; }
+</style>

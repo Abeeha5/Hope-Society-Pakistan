@@ -1,0 +1,89 @@
+---
+import { site } from '../data/site';
+interface Props { cta?: boolean }
+const { cta = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="ft">
+  {cta && (
+    <div class="wrap" style="padding-top:72px">
+      <div class="cta-box">
+        <div class="rays" style="right:-120px;bottom:-260px;width:620px;height:620px;background:repeating-conic-gradient(from 0deg,rgba(11,36,87,.12) 0deg 1.4deg,transparent 1.4deg 7deg)"></div>
+        <div class="rel">
+          <div class="eyebrow" style="color:var(--navy);margin-bottom:14px">Membership drive · January &amp; July</div>
+          <h2 class="display d900" style="font-size:clamp(44px,6vw,84px);line-height:.88">Become a Hopian.</h2>
+          <p style="margin:18px 0 0;font-size:18px;line-height:1.5;max-width:460px;text-wrap:pretty">Open to every student, whatever your background. Lead a club, run a campaign, or start an embassy at your campus.</p>
+        </div>
+        <div class="rel cta-actions">
+          <div class="qr" title="Scan to open the membership form"><img src="/images/qr-join.svg" alt="QR code linking to the membership form" width="108" height="108" /></div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <a href="/get-involved#join" class="btn btn-navy">Join the next drive</a>
+            <a href="/get-involved#path" class="btn btn-outline">Volunteer with us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <div class="wrap cols">
+    <div class="brandcol">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div class="logo-disc"><img src="/images/hope-logo.png" alt="" width="64" height="64" /></div>
+        <div class="display" style="font-size:26px;line-height:.9">Hope Society<br /><span class="gold" style="letter-spacing:.3em;font-size:16px">Pakistan</span></div>
+      </div>
+      <p class="tag">Harmony · Opportunity · Patriotism · Empowerment</p>
+    </div>
+    <div class="col">
+      <div class="h">Society</div>
+      <a href="/about">About us</a>
+      <a href="/team">Leadership</a>
+      <a href="/chapters">Chapters &amp; embassies</a>
+      <a href="/impact">Our impact</a>
+      <a href="/library">Library</a>
+    </div>
+    <div class="col">
+      <div class="h">Take part</div>
+      <a href="/events">Programs &amp; events</a>
+      <a href="/departments">Departments &amp; clubs</a>
+      <a href="/get-involved">Membership</a>
+      <a href="/donate">Donate &amp; partner</a>
+      <a href="/faq">FAQ</a>
+    </div>
+    <div class="col">
+      <div class="h">Reach us</div>
+      <a href={site.phoneHref}>{site.phone}</a>
+      <a href={`mailto:${site.email}`} style="word-break:break-all">{site.email}</a>
+      <a href={site.socials.instagram.url} target="_blank" rel="noopener">Instagram</a>
+      <a href={site.socials.facebook.url} target="_blank" rel="noopener">Facebook</a>
+      <a href={site.socials.linkedin.url} target="_blank" rel="noopener">LinkedIn</a>
+      <a href={site.socials.youtube.url} target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.12)">
+    <div class="wrap legal">
+      <span>© {year} Hope Society Pakistan · {site.domain}</span>
+      <div style="display:flex;gap:20px"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .ft { background: var(--navy); color: #fff; position: relative; overflow: hidden; }
+  .cta-box { position: relative; overflow: hidden; border-radius: 28px; background: var(--gold); color: var(--navy); padding: clamp(28px,5vw,64px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,320px),1fr)); gap: 32px; align-items: center; }
+  .cta-actions { display: flex; gap: 20px; align-items: center; justify-content: flex-end; flex-wrap: wrap; }
+  @media (max-width: 700px) { .cta-actions { justify-content: flex-start; } }
+  .qr { width: 132px; height: 132px; border-radius: 16px; background: #fff; display: grid; place-items: center; }
+  .cols { padding-top: 72px; padding-bottom: 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,180px),1fr)); gap: 40px; }
+  @media (min-width: 900px) { .brandcol { grid-column: span 2; } }
+  .brandcol { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .logo-disc { width: 64px; height: 64px; border-radius: 50%; background: #fff; overflow: hidden; flex: none; }
+  .logo-disc img { width: 64px; height: 64px; object-fit: cover; object-position: 50% 22%; }
+  .tag { margin: 0; font-size: 14px; color: rgba(255,255,255,.6); }
+  .col { display: flex; flex-direction: column; gap: 10px; font-size: 15px; min-width: 0; }
+  .col .h { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+  .col a { color: #fff; text-decoration: none; }
+  .col a:hover { color: var(--gold); }
+  .legal { padding-top: 20px; padding-bottom: 20px; display: flex; gap: 12px 20px; flex-wrap: wrap; justify-content: space-between; font-size: 13px; color: rgba(255,255,255,.6); }
+  .legal a { color: rgba(255,255,255,.6); text-decoration: none; }
+  .legal a:hover { color: #fff; }
+</style>

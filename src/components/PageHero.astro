@@ -1,0 +1,30 @@
+---
+import Photo from './Photo.astro';
+interface Props { crumb: string; title: string; accent?: string; lede?: string; image?: string; imageLabel?: string; imagePosition?: string; }
+const { crumb, title, accent, lede, image, imageLabel, imagePosition } = Astro.props;
+const hasImage = image !== undefined || imageLabel !== undefined;
+---
+<section class="hero bg-navy">
+  <div class="rays" style="right:-380px;top:50%;width:1200px;height:1200px;transform:translateY(-50%);background:repeating-conic-gradient(rgba(246,194,50,.2) 0deg .8deg,transparent .8deg 5deg);-webkit-mask:radial-gradient(circle,transparent 0 10%,#000 11% 44%,transparent 66%);mask:radial-gradient(circle,transparent 0 10%,#000 11% 44%,transparent 66%)"></div>
+  <div class="wrap rel inner">
+    <div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span aria-current="page">{crumb}</span></nav>
+      <h1 class="h1">{title}{accent && <><br /><span class="gold">{accent}</span></>}</h1>
+      {lede && <p class="lede" style="margin:28px 0 0;color:rgba(255,255,255,.8);max-width:540px">{lede}</p>}
+    </div>
+    {hasImage && (
+      <div class="img arch"><Photo src={image} label={imageLabel} position={imagePosition} eager dark /></div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; overflow: hidden; }
+  .inner { padding-top: clamp(40px,6vw,80px); padding-bottom: clamp(56px,7vw,96px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,460px),1fr)); gap: 48px; align-items: end; }
+  .crumbs { display: flex; gap: 8px; font-size: 13px; color: rgba(255,255,255,.65); margin-bottom: 28px; }
+  .crumbs a { color: rgba(255,255,255,.65); text-decoration: none; }
+  .crumbs a:hover { color: #fff; }
+  .crumbs [aria-current] { color: #fff; font-weight: 600; }
+  .img { justify-self: end; width: min(100%,440px); aspect-ratio: 5/6; border-radius: 999px 999px 28px 28px; background: var(--blue); }
+  @media (max-width: 960px) { .img { justify-self: center; width: min(100%,380px); } }
+</style>

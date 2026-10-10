@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Photo from '../components/Photo.astro';
+
+const stats = [['300+', 'Members'], ['100+', 'Interns'], ['50+', 'Successful events'], ['30+', 'Campaigns & competitions'], ['11k+', 'Social followers']];
+const stories = [
+  { photo: undefined as string | undefined, tag: 'Patriotism · Iqbal Festival', t: 'Forty schools, one stage', d: 'What began as a small poetry contest grew into a city-wide festival where students from public and private schools competed side by side.', n1: '40+', l1: 'Institutions', n2: '900', l2: 'Attendees' },
+  { photo: undefined as string | undefined, tag: 'Empowerment · Peace League', t: 'From volunteer to cabinet', d: 'Through workshops and the volunteer path, first-year students are now running chapter cabinets and mentoring new Change Makers.', n1: '60', l1: 'Coordinators trained', n2: '3', l2: 'Provinces' },
+];
+// TODO: add partner logos as { t, logo: '/images/partners/x.png' }
+const collabs: { t: string; logo?: string }[] = ['Schools', 'Colleges', 'Universities', 'Civil society', 'Media & tech', 'Government'].map((t) => ({ t }));
+---
+<Base title="Our Impact" description="What students have built since 2021: 1,200+ volunteers, 50+ events and 30+ campaigns.">
+  <PageHero crumb="Our impact" title="Five years," accent="counted." lede="What students have built since 2021, one event, campaign and campus at a time." />
+
+  <section class="wrap" style="padding-top:clamp(56px,7vw,96px)">
+    <div class="bento">
+      <div class="big bg-gold">
+        <div class="rays" style="right:-140px;bottom:-140px;width:420px;height:420px;background:repeating-conic-gradient(rgba(11,36,87,.12) 0deg 1.4deg,transparent 1.4deg 7deg)"></div>
+        <div class="rel" style="font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">Volunteers mobilised</div>
+        <div class="rel display d900" style="font-size:clamp(100px,14vw,200px);line-height:.8">1200+</div>
+      </div>
+      {stats.map(([v, l]) => (
+        <div class="cell">
+          <div class="muted" style="font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">{l}</div>
+          <div class="display d900" style="font-size:64px;line-height:.9">{v}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px)">
+    <div class="eyebrow">Success stories</div>
+    <div style="display:grid;gap:56px">
+      {stories.map((s) => (
+        <article class="grid-auto reveal" style="--min:380px;--gap:40px;align-items:center">
+          <div style="aspect-ratio:4/3;border-radius:28px;overflow:hidden"><Photo src={s.photo} label="Story photo" /></div>
+          <div>
+            <div class="muted" style="font-size:13px;font-weight:700">{s.tag}</div>
+            <h2 class="display d900 navy" style="margin-top:12px;font-size:clamp(40px,4.6vw,64px);line-height:.9">{s.t}</h2>
+            <p class="body" style="margin:18px 0 0">{s.d}</p>
+            <div style="display:flex;gap:32px;margin-top:24px">
+              <div><div class="display d900 blue" style="font-size:44px;line-height:1">{s.n1}</div><div class="muted" style="font-size:13px">{s.l1}</div></div>
+              <div><div class="display d900 blue" style="font-size:44px;line-height:1">{s.n2}</div><div class="muted" style="font-size:13px">{s.l2}</div></div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-sand">
+    <div class="wrap" style="padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px)">
+      <h2 class="display h2" style="margin:0 0 36px">Who we work with</h2>
+      <div class="grid-auto" style="--min:180px;--gap:12px">
+        {collabs.map((c) => (
+          <div class="collab lift">
+            <div class="logo">{c.logo ? <img src={c.logo} alt="" /> : 'Partner logo'}</div>
+            <div class="display navy" style="font-size:24px">{c.t}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bento { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,240px),1fr)); gap: 12px; }
+  .big { border-radius: 28px; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; min-height: 300px; position: relative; overflow: hidden; min-width: 0; }
+  @media (min-width: 560px) { .big { grid-column: span 2; } }
+  .cell { border-radius: 28px; background: var(--sand); color: var(--navy); padding: 28px; display: flex; flex-direction: column; justify-content: space-between; min-height: 144px; gap: 12px; }
+  .collab { border-radius: 22px; background: #fff; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .logo { height: 96px; border-radius: 14px; border: 1.5px dashed rgba(18,25,51,.18); display: grid; place-items: center; font-size: 12px; color: var(--faint); }
+  .logo img { max-height: 72px; object-fit: contain; }
+</style>

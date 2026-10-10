@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+
+const uses = [{ a: 'PKR 1k', d: 'Workshop materials for one campus' }, { a: 'PKR 5k', d: 'Prizes for a festival competition' }, { a: 'PKR 25k', d: 'Venue and logistics for a Hope Circle' }];
+const amounts: [number, string][] = [
+  [1000, 'covers stationery for one campus workshop.'],
+  [2500, 'sponsors a student’s seat at the Youth Symposium.'],
+  [5000, 'funds prizes for an Iqbal Festival competition.'],
+  [10000, 'helps open a new embassy at a school.'],
+];
+const tiers = [{ n: 'Event partner', p: 'Single event', d: 'Branding at one flagship event and a mention across our channels.' }, { n: 'Season sponsor', p: '6 months', d: 'Branding on a full drive season, plus a seat at the Executive Summit.' }, { n: 'Founding patron', p: 'Annual', d: 'Year-round partnership, newsletter feature and campus outreach.' }];
+const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
+---
+<Base title="Support HOPE" description="HOPE is run entirely by volunteers. Donate, sponsor a program or partner with us.">
+  <PageHero crumb="Support" title="Fuel the" accent="next sunrise." lede="HOPE is run entirely by volunteers. Every rupee goes to events, workshops and materials for students." />
+
+  <section class="wrap grid-auto" style="--min:440px;--gap:56px;align-items:start;padding-top:clamp(56px,7vw,96px);padding-bottom:clamp(64px,8vw,112px)">
+    <div>
+      <div class="eyebrow">Where it goes</div>
+      <h2 class="display h2">Every rupee, accounted for.</h2>
+      <div class="uses">
+        {uses.map((u) => <div class="use"><div class="display d900 navy" style="font-size:32px">{u.a}</div><div class="body" style="font-size:15px;line-height:1.5">{u.d}</div></div>)}
+      </div>
+    </div>
+
+    <div class="panel bg-navy" id="partner" style="scroll-margin-top:100px">
+      <div class="seg dark" role="tablist" aria-label="Ways to support">
+        {['Donate', 'Sponsor', 'Partner'].map((t, i) => <button type="button" role="tab" aria-pressed={i === 0 ? 'true' : 'false'} data-tab={t}>{t}</button>)}
+      </div>
+
+      <div data-panel="Donate">
+        <div class="freq" data-select="single">
+          <button aria-pressed="true" data-value="once">One-time</button>
+          <button aria-pressed="false" data-value="monthly">Monthly</button>
+        </div>
+        <div class="amts" data-select="single">
+          {amounts.map(([n, line], i) => <button aria-pressed={i === 1 ? 'true' : 'false'} data-value={n} data-line={line}>{fmt(n)}</button>)}
+        </div>
+        <div class="impact"><strong data-amt>{fmt(2500)}</strong><strong data-freq></strong> <span style="color:rgba(255,255,255,.85)" data-line>{amounts[1][1]}</span></div>
+        <button type="button" class="btn btn-gold btn-block" style="margin-top:22px" data-donate>Donate <span data-amt>{fmt(2500)}</span></button>
+        <div class="pay" data-pay hidden>
+          <div style="font-weight:700;font-size:15px;margin-bottom:10px">Send <span data-amt>{fmt(2500)}</span><span data-freq></span> to any of these:</div>
+          {site.payments.map((p) => (
+            <div class="acct"><div class="gold" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">{p.method}</div><div style="font-weight:700;margin-top:4px">{p.title}</div><div style="font-family:ui-monospace,monospace;font-size:14px;margin-top:2px;user-select:all">{p.detail}</div></div>
+          ))}
+          <p style="margin:12px 0 0;font-size:14px;line-height:1.5;color:rgba(255,255,255,.75)">Then WhatsApp a screenshot to <a href={site.whatsapp} class="gold">{site.phone}</a> or email <a href={`mailto:${site.email}?subject=Donation%20receipt`} class="gold">{site.email}</a> and we'll send your receipt.</p>
+        </div>
+        <p class="form-note" style="color:rgba(255,255,255,.6)">Bank transfer, JazzCash or Easypaisa. Receipts sent by email.</p>
+      </div>
+
+      <div data-panel="Sponsor" hidden>
+        <div style="display:grid;gap:10px">
+          {tiers.map((t) => (
+            <div class="tier">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap"><div class="display d900" style="font-size:32px">{t.n}</div><div class="gold" style="font-size:14px;font-weight:700">{t.p}</div></div>
+              <div style="margin-top:6px;font-size:14px;line-height:1.55;color:rgba(255,255,255,.75)">{t.d}</div>
+            </div>
+          ))}
+        </div>
+        <a href="/contact?topic=Partnership" class="btn btn-gold btn-block" style="margin-top:22px">Request sponsorship deck</a>
+      </div>
+
+      <div data-panel="Partner" hidden data-form-wrap>
+        <form data-form="partnership" data-endpoint={site.formsEndpoint} data-email={site.email} novalidate>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.82)">Schools, universities, NGOs, media and government bodies: co-host an event, open an embassy or run a joint campaign.</p>
+          <div style="display:grid;gap:10px">
+            <label class="field" data-validate="required"><span class="sr-only">Organisation name</span><input class="input" name="organisation" placeholder="Organisation name" style="border:0" /><span class="err">Please add your organisation</span></label>
+            <label class="field" data-validate="email"><span class="sr-only">Your email</span><input class="input" name="email" type="email" placeholder="Your email" style="border:0" /><span class="err">Enter a valid email</span></label>
+            <label class="field"><span class="sr-only">Message</span><textarea class="input" name="message" rows="4" placeholder="What would you like to do together?" style="border:0"></textarea></label>
+          </div>
+          <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button type="submit" class="btn btn-gold btn-block" style="margin-top:16px">Send enquiry</button>
+          <div class="form-error" data-error hidden></div>
+        </form>
+        <div data-success hidden tabindex="-1" style="padding:40px 0;text-align:center">
+          <div class="display d900 gold" style="font-size:56px;line-height:.9">Shukriya.</div>
+          <p style="margin:14px auto 0;max-width:340px;color:rgba(255,255,255,.82)">Our Information &amp; Outreach team will be in touch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { wireForms, wireChips } from '../scripts/forms';
+  wireChips(); wireForms();
+  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
+  const showTab = (t: string) => {
+    tabs.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tab === t)));
+    document.querySelectorAll<HTMLElement>('[data-panel]').forEach((p) => (p.hidden = p.dataset.panel !== t));
+  };
+  tabs.forEach((b) => b.addEventListener('click', () => showTab(b.dataset.tab!)));
+  if (location.hash === '#partner') showTab('Partner');
+
+  const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
+  let amt = 2500, monthly = false;
+  const render = () => {
+    document.querySelectorAll('[data-amt]').forEach((e) => (e.textContent = fmt(amt)));
+    document.querySelectorAll('[data-freq]').forEach((e) => (e.textContent = monthly ? '/month' : ''));
+  };
+  document.querySelector('.amts')!.addEventListener('change', (e) => {
+    amt = +(e as CustomEvent).detail;
+    const b = document.querySelector<HTMLElement>(`.amts [data-value="${amt}"]`)!;
+    document.querySelector('[data-line]')!.textContent = b.dataset.line!;
+    render();
+  });
+  document.querySelector('.freq')!.addEventListener('change', (e) => { monthly = (e as CustomEvent).detail === 'monthly'; render(); });
+  document.querySelector('[data-donate]')!.addEventListener('click', () => {
+    const pay = document.querySelector<HTMLElement>('[data-pay]')!;
+    pay.hidden = false; pay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+</script>
+
+<style>
+  .uses { margin-top: 32px; display: grid; gap: 2px; border-radius: 24px; overflow: hidden; max-width: 520px; }
+  .use { display: grid; grid-template-columns: 120px 1fr; gap: 20px; align-items: center; padding: 20px 24px; background: var(--sand); }
+  .panel { border-radius: 32px; padding: clamp(22px,3.5vw,40px); min-width: 0; }
+  .seg.dark { display: flex; background: rgba(255,255,255,.08); margin-bottom: 28px; }
+  .seg.dark button { flex: 1; color: #fff; }
+  .seg.dark button:hover { box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.4); }
+  .seg.dark button[aria-pressed="true"] { background: #fff; color: var(--navy); }
+  .freq { display: flex; gap: 6px; margin-bottom: 18px; }
+  .freq button { padding: 9px 16px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.2); background: transparent; color: #fff; font: 700 14px var(--body); cursor: pointer; }
+  .freq button[aria-pressed="true"] { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+  .amts { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .amts button { height: 64px; border-radius: 18px; cursor: pointer; font: 900 clamp(20px,2.4vw,26px) var(--display); border: 1.5px solid rgba(255,255,255,.18); background: transparent; color: #fff; }
+  .amts button:hover { border-color: rgba(255,255,255,.5); }
+  .amts button[aria-pressed="true"] { border-color: var(--gold); background: var(--gold); color: var(--navy); }
+  .impact { margin-top: 22px; padding: 20px; border-radius: 18px; background: rgba(246,194,50,.12); color: var(--gold); font-size: 15px; line-height: 1.5; }
+  .pay { margin-top: 18px; padding: 20px; border-radius: 18px; background: rgba(255,255,255,.06); display: grid; gap: 10px; }
+  .acct { padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,.06); }
+  .tier { border-radius: 20px; border: 1.5px solid rgba(255,255,255,.15); padding: 22px; }
+</style>

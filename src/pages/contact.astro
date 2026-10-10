@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { site } from '../data/site';
+const topics = ['Membership', 'Events', 'Start an embassy', 'Partnership', 'Media', 'Other'];
+const s = site.socials;
+---
+<Base title="Contact" description="Questions, partnerships or a new embassy at your campus. Reach the Hope Society Pakistan federal office directly.">
+  <PageHero crumb="Contact" title="Say" accent="salaam." lede="Questions, partnerships or a new embassy at your campus. Reach the federal office directly." />
+
+  <section class="wrap" style="padding-top:clamp(56px,7vw,96px);padding-bottom:clamp(64px,8vw,112px)">
+    <div class="grid-auto" style="--min:400px;--gap:20px;align-items:stretch">
+      <div class="tiles">
+        <a href={site.phoneHref} class="tile bg-gold"><span class="tk">Call or WhatsApp</span><span class="display d900" style="font-size:34px;line-height:.95;white-space:nowrap">{site.phone}</span></a>
+        <a href={`mailto:${site.email}`} class="tile bg-navy mail"><span class="tk gold">Email</span><span style="font-size:18px;font-weight:700;word-break:break-all">{site.email}</span></a>
+        <div class="hqmap">
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(29,77,159,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(29,77,159,.08) 1px,transparent 1px);background-size:36px 36px"></div>
+          <div class="rays" style="left:50%;top:42%;transform:translate(-50%,-50%);width:180px;height:180px;background:repeating-conic-gradient(rgba(246,194,50,.6) 0deg 2deg,transparent 2deg 10deg);-webkit-mask:radial-gradient(circle,transparent 0 18%,#000 19% 50%,transparent 70%);mask:radial-gradient(circle,transparent 0 18%,#000 19% 50%,transparent 70%)"></div>
+          <div style="position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:22px;height:22px;border-radius:50%;background:var(--navy);border:4px solid #fff;box-shadow:0 4px 12px rgba(11,36,87,.3)"></div>
+          <div class="hqcard"><div><div style="font-weight:700;font-size:15px">Federal Office · Headquarters</div><div class="muted" style="font-size:13px">Islamabad, Pakistan</div></div><a href={site.mapsUrl} target="_blank" rel="noopener" style="font-size:14px;font-weight:700;text-decoration:none">Directions</a></div>
+        </div>
+        <div class="socials">
+          <a href={s.instagram.url} target="_blank" rel="noopener">Instagram · {s.instagram.label}</a>
+          <a href={s.facebook.url} target="_blank" rel="noopener">Facebook · {s.facebook.label}</a>
+          <a href={s.linkedin.url} target="_blank" rel="noopener">LinkedIn · {s.linkedin.label}</a>
+          <a href={s.youtube.url} target="_blank" rel="noopener">YouTube · {s.youtube.label}</a>
+        </div>
+      </div>
+
+      <div class="formcard" data-form-wrap>
+        <form data-form="contact" data-endpoint={site.formsEndpoint} data-email={site.email} novalidate>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px" id="topic-l">What's this about?</div>
+          <input type="hidden" name="topic" value="Membership" />
+          <div class="chips" style="margin-bottom:24px" data-select="single" data-input="topic" role="group" aria-labelledby="topic-l">
+            {topics.map((t, i) => <button class="chip" aria-pressed={i === 0 ? 'true' : 'false'}>{t}</button>)}
+          </div>
+          <div class="two">
+            <label class="field" data-validate="required">Name<input class="input" name="name" placeholder="Your name" autocomplete="name" /><span class="err">Please enter your name</span></label>
+            <label class="field" data-validate="email">Email<input class="input" name="email" type="email" placeholder="you@email.com" autocomplete="email" /><span class="err">Enter a valid email</span></label>
+            <label class="field full" data-validate="required">Message<textarea class="input" name="message" rows="6" placeholder="Tell us a little more"></textarea><span class="err">Please write a message</span></label>
+          </div>
+          <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button type="submit" class="btn btn-navy btn-block" style="margin-top:22px">Send message</button>
+          <div class="form-error" data-error hidden></div>
+          <p class="form-note">We usually reply within two working days.</p>
+        </form>
+        <div data-success hidden tabindex="-1" style="padding:60px 0;text-align:center">
+          <div class="display d900 navy" style="font-size:64px;line-height:.9">Shukriya.</div>
+          <p class="body" style="margin:14px auto 0;max-width:340px">Your message reached the Information &amp; Outreach team.</p>
+          <button type="button" class="btn btn-outline btn-sm" style="margin-top:24px" data-reset>Send another</button>
+        </div>
+      </div>
+    </div>
+    <div class="muted" style="margin-top:32px;font-size:15px">Questions about joining? Try the <a href="/faq" style="font-weight:700">FAQ</a> first.</div>
+  </section>
+</Base>
+
+<script>
+  import { wireForms, wireChips } from '../scripts/forms';
+  wireChips(); wireForms();
+  // Preselect a topic from ?topic=... (used by "Propose an embassy" links etc.)
+  const t = new URLSearchParams(location.search).get('topic');
+  if (t) document.querySelectorAll<HTMLButtonElement>('[data-input="topic"] button').forEach((b) => { if (b.textContent!.trim() === t) b.click(); });
+</script>
+
+<style>
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,260px),1fr)); gap: 12px; align-content: start; }
+  .tile { border-radius: 24px; padding: 26px; text-decoration: none; display: flex; flex-direction: column; gap: 28px; transition: background .2s; min-width: 0; }
+  .tile.bg-gold:hover { background: var(--gold-hi); color: var(--navy); }
+  .tile.mail { color: #fff; }
+  .tile.mail:hover { background: var(--blue); color: #fff; }
+  .tk { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+  .hqmap { grid-column: 1 / -1; border-radius: 24px; overflow: hidden; background: var(--mist); position: relative; min-height: 260px; }
+  .hqcard { position: absolute; left: 20px; bottom: 20px; right: 20px; padding: 16px 18px; border-radius: 16px; background: #fff; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .socials { grid-column: 1 / -1; display: flex; gap: 10px; flex-wrap: wrap; }
+  .socials a { padding: 13px 18px; border-radius: 999px; border: 1.5px solid var(--line-2); color: var(--navy); font-weight: 700; font-size: 14px; text-decoration: none; }
+  .socials a:hover { border-color: var(--navy); }
+  .formcard { border-radius: 28px; border: 1.5px solid rgba(18,25,51,.1); padding: clamp(22px,3.5vw,44px); min-width: 0; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; }
+  .full { grid-column: 1 / -1; }
+</style>

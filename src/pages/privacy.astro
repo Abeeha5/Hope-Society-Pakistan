@@ -1,0 +1,15 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+---
+<Legal title="Privacy" updated="October 2026">
+  <p class="note">Starter text. Have someone on the cabinet review it before launch.</p>
+  <h2>What we collect</h2>
+  <p>When you fill in a form on this site (membership, contact, event registration, partnership or newsletter) we receive the details you type in: usually your name, email, phone number, city, institution and message. We don't use tracking cookies or advertising trackers.</p>
+  <h2>How we use it</h2>
+  <p>Only to respond to you: placing you in a membership drive, confirming an event registration, replying to your message, or sending the newsletter you asked for. Your details are seen only by the Hope Society Pakistan team members who handle that request.</p>
+  <h2>Where it's stored</h2>
+  <p>Form submissions are stored in a private Google Sheet owned by the society. We keep membership records while you're an active member and delete other submissions when they're no longer needed.</p>
+  <h2>Your choices</h2>
+  <p>You can ask us to see, correct or delete your details at any time by emailing <a href={`mailto:${site.email}`}>{site.email}</a>. Every newsletter has an unsubscribe option.</p>
+</Legal>
