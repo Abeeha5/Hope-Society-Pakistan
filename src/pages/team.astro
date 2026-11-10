@@ -2,9 +2,9 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Photo from '../components/Photo.astro';
-import { cabinet, advisors, chairman } from '../data/content';
+import { cabinet, chairman } from '../data/content';
 ---
-<Base title="Leadership" description="The federal cabinet and board of advisors of Hope Society Pakistan.">
+<Base title="Leadership" description="The federal cabinet of Hope Society Pakistan.">
   <PageHero crumb="Leadership" title="The people" accent="behind HOPE." lede="Every cabinet member has served at least two years as an active Hopian. Cabinets are selected on capability and serve one-year terms." />
 
   <section class="wrap" style="padding-top:clamp(48px,6vw,80px)">
@@ -34,17 +34,9 @@ import { cabinet, advisors, chairman } from '../data/content';
   </section>
 
   <section class="bg-sand">
-    <div class="wrap" style="padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px)">
-      <h2 class="display" style="margin:0 0 32px;font-size:clamp(40px,5vw,64px)">Board of Advisors</h2>
-      <div class="grid-auto" style="--min:280px;--gap:14px">
-        {advisors.map((a) => (
-          <div class="adv">
-            <div style="width:72px;height:72px;flex:none;border-radius:50%;overflow:hidden"><Photo src={a.photo} label="" /></div>
-            <div><div style="font-weight:700;font-size:16px">{a.n}</div><div class="muted" style="font-size:13px;margin-top:3px">{a.r}</div></div>
-          </div>
-        ))}
-      </div>
-      <p class="muted" style="margin:32px 0 0;font-size:15px">Also guiding us: the Executive &amp; Ambassador Assemblies, Board of Directors, and the Alumni &amp; Experts Forum.</p>
+    <div class="wrap" style="padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(48px,6vw,80px);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+      <p class="body" style="margin:0;max-width:480px">Beyond the federal cabinet, HOPE is also guided by a Board of Advisors and kept connected to its past leaders through the Alumni Forum.</p>
+      <a href="/advisors" class="btn btn-outline btn-sm">Board &amp; Alumni Forum</a>
     </div>
   </section>
 </Base>
@@ -56,5 +48,4 @@ import { cabinet, advisors, chairman } from '../data/content';
   .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin: 48px 0 32px; padding-top: 40px; border-top: 1px solid var(--line); }
   .cab { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%,220px),1fr)); gap: 36px 18px; }
   @media (max-width: 520px) { .cab { grid-template-columns: repeat(2, 1fr); } }
-  .adv { border-radius: 22px; background: #fff; padding: 20px; display: flex; gap: 16px; align-items: center; }
 </style>

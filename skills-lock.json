@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "design-taste-frontend": {
+      "source": "../../Users/abeeh/AppData/Local/Temp/claude/C--Projects-Hope-Society-Pakistan/f5b98a8f-ee88-4d71-9edd-920528923ea7/scratchpad/taste-skill",
+      "sourceType": "local",
+      "computedHash": "974e1bb8cf7c78d3a63f1456d54a97119c03e7ab8bf374e04ade800892326ec7"
+    },
+    "impeccable": {
+      "source": "../../Users/abeeh/AppData/Local/Temp/claude/C--Projects-Hope-Society-Pakistan/f5b98a8f-ee88-4d71-9edd-920528923ea7/scratchpad/impeccable",
+      "sourceType": "local",
+      "computedHash": "32fd095cccdb137d71e3834c1e1da945aff214cb047202c2417c7d2b47d002c1"
+    }
+  }
+}

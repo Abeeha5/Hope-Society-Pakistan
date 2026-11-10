@@ -7,7 +7,7 @@ venue: "Pakistan National Council of the Arts, Islamabad"
 tag: "Festival"
 summary: "Poetry, debate, calligraphy and music celebrating Allama Iqbal."
 lede: "A full day celebrating Allama Muhammad Iqbal: his poetry, his idea of khudi, and what it asks of young Pakistanis today."
-image: "/images/minar-e-pakistan.jpg"
+image: "/images/iqbal%20festival%201.jpeg"
 registration: true
 guests:
   - { name: "Guest name", role: "Poet & critic" }

@@ -5,15 +5,16 @@
  */
 
 export const departments = [
-  { n: '01', t: 'Creative Arts & Literature', s: 'Writing, poetry, art, music and dramatics clubs', anchor: 'arts' },
-  { n: '02', t: 'Media Cell', s: 'Photography, film and storytelling for every event', anchor: 'media' },
-  { n: '03', t: 'Administration & Operations', s: 'Finance, information, publication and outreach', anchor: 'admin' },
-  { n: '04', t: 'Peace League', s: 'Sports, tours and capacity-building workshops', anchor: 'peace' },
-  { n: '05', t: 'Volunteers & Internships', s: 'Hands-on experience that turns into leadership', anchor: 'vol' },
+  { n: '01', t: 'Creative Arts & Literature', s: 'Poets, writers, readers and artists across five clubs', anchor: 'arts' },
+  { n: '02', t: 'Media Cell', s: 'Photographers, graphic designers, video editors, filmmakers and journalists', anchor: 'media' },
+  { n: '03', t: 'Technical Experts', s: 'AI & software engineers and medical students', anchor: 'tech' },
+  { n: '04', t: 'Administration & Operations', s: 'Finance, information, publication and outreach', anchor: 'admin' },
+  { n: '05', t: 'Peace League', s: 'Athletes & peacemakers: sports, plantation drives, peace walks, cleanliness drives', anchor: 'peace' },
+  { n: '06', t: 'Volunteers, Fellowships & Internships', s: 'Hands-on experience that turns into leadership', anchor: 'vol' },
 ];
 
 export const clubs: { t: string; d: string; photo?: string }[] = [
-  { t: 'Writing & Reading', d: 'Book circles, essay contests and the newsletter.' },
+  { t: 'Writing & Reading', d: 'A home for poets, writers and readers: book circles, essay contests and the newsletter.' },
   { t: 'Poetry', d: 'Mushairas, recitation and Iqbal Festival entries.' },
   { t: 'Art', d: 'Calligraphy, painting and campus exhibitions.' },
   { t: 'Music', d: 'Qawwali, national songs and evening performances.' },
@@ -21,9 +22,10 @@ export const clubs: { t: string; d: string; photo?: string }[] = [
 ];
 
 export const otherDepartments: { anchor: string; n: string; t: string; d: string; u: string; photo?: string }[] = [
-  { anchor: 'admin', n: '03', t: 'Administration & Operations', d: 'The engine room. Plans budgets, keeps records, publishes material and builds relationships with schools, partners and media.', u: 'Finance · Information · Publication · Outreach' },
-  { anchor: 'peace', n: '04', t: 'Peace League', d: 'Unity through play and travel. Sports tournaments, study tours and capacity-building workshops that bring students from different backgrounds together.', u: 'Sports · Tours & visits · Workshops' },
-  { anchor: 'vol', n: '05', t: 'Volunteers & Internships', d: 'Your on-ramp. Volunteer at events, intern with a department, and grow from Change Maker to Peace Maker to Shaheen.', u: '1,200+ volunteers · 100+ interns', photo: '/images/monument-vests.jpg' },
+  { anchor: 'tech', n: '03', t: 'Technical Experts', d: 'The builders and problem-solvers. AI and software engineers and medical students who bring technical and scientific thinking to HOPE’s work, from internal tools to health-awareness campaigns.', u: 'AI & Software Engineers · Medical Students' },
+  { anchor: 'admin', n: '04', t: 'Administration & Operations', d: 'The engine room. Plans budgets, keeps records, publishes material and builds relationships with schools, partners and media.', u: 'Finance · Information · Publication · Outreach' },
+  { anchor: 'peace', n: '05', t: 'Peace League', d: 'Unity through play, service and travel. Athletes and peacemakers running sports tournaments, plantation drives, peace walks and cleanliness drives that bring students from different backgrounds together.', u: 'Athletes · Peacemakers · Sports · Plantation Drives · Peace Walks · Cleanliness Drives' },
+  { anchor: 'vol', n: '06', t: 'Volunteers, Fellowships & Internships', d: 'Your on-ramp. Volunteer at events, take on a fellowship, or intern with a department, and grow from Change Maker to Peace Maker to Shaheen.', u: '1,500+ volunteers · 100+ interns', photo: '/images/monument-vests.jpg' },
 ];
 
 // TODO: replace with real, consented testimonials
@@ -43,19 +45,19 @@ export const homePrograms = [
 ];
 
 export const hope = [
-  { l: 'H', w: 'Harmony', d: 'Peace, unity and social cohesion among individuals and communities.' },
-  { l: 'O', w: 'Opportunity', d: 'Education, skill development and socio-economic growth for all.' },
-  { l: 'P', w: 'Patriotism', d: 'Love for Pakistan through cultural heritage and national identity.' },
-  { l: 'E', w: 'Empowerment', d: 'Youth, students and women as active contributors to society.' },
+  { l: 'H', w: 'Harmony', d: 'Peace, unity and social cohesion among individuals and communities.', icon: 'harmony' },
+  { l: 'O', w: 'Opportunity', d: 'Education, skill development and socio-economic growth for all.', icon: 'opportunity' },
+  { l: 'P', w: 'Patriotism', d: 'Love for Pakistan through cultural heritage and national identity.', icon: 'patriotism' },
+  { l: 'E', w: 'Empowerment', d: 'Youth, students and women as active contributors to society.', icon: 'empowerment' },
 ];
 
-export const milestones = [
-  { y: '2021', t: 'Hope Society Pakistan founded in Islamabad.' },
-  { y: '2022', t: 'First campus embassies and the Writing & Reading Club.' },
-  { y: '2023', t: 'Hope Media Cell launched; first Peace Conference.' },
-  { y: '2024', t: 'Chapters form at provincial level.' },
-  { y: '2025', t: '1,200+ volunteers and 50+ events reached.' },
-  { y: '2026', t: 'Manifesto revised; new website launches.' },
+export const milestones: { y: string; icon: string; items: string[] }[] = [
+  { y: '2021', icon: 'flag', items: ['Hope Society Pakistan founded in Lahore', 'Iqbal Festival 1.0', 'Hope Media Cell launched'] },
+  { y: '2022', icon: 'building', items: ['Islamabad chapter opens', 'First federal cabinet', 'First symposium, held in Lahore', 'Hussain The Global Hope 1.0'] },
+  { y: '2023', icon: 'map-pin', items: ['Campus embassies established', 'Work on the manifesto begins'] },
+  { y: '2024', icon: 'star', items: ['Iqbal Festival held at Aiwan-e-Iqbal', 'Chapters strengthened nationwide'] },
+  { y: '2025', icon: 'users', items: ['1,200+ volunteers reached', '50+ events held', 'Chapters expand to Gilgit-Baltistan, Quetta, Attock and Jhang'] },
+  { y: '2026', icon: 'rocket', items: ['Manifesto revised', 'New website launches'] },
 ];
 
 export const chairman = { name: 'Husayn Paras Naqvi', role: 'Chairman, Hope Society Pakistan', bio: 'Founder of Hope Society Pakistan and author of its manifesto.', photo: undefined as string | undefined };
@@ -63,18 +65,25 @@ export const chairman = { name: 'Husayn Paras Naqvi', role: 'Chairman, Hope Soci
 // TODO: fill in real names and photos
 export const cabinet: { n: string; r: string; b: string; photo?: string }[] = [
   ['President', 'Leads the federal cabinet and the society’s annual program.'],
+  ['Vice President', 'Supports the president and steps in across chapters.'],
   ['Federal Chief Coordinator', 'Coordinates provinces, chapters and embassies.'],
   ['Finance & Publication Coordinator', 'Budgets, sponsorships and the yearly newsletter.'],
   ['Writing & Reading Club Coordinator', 'Book circles, essay contests and literary events.'],
   ['Poetry Club Coordinator', 'Mushairas and the Iqbal Festival poetry track.'],
   ['Music Club Coordinator', 'Performances and cultural evenings.'],
   ['Art Club Coordinator', 'Exhibitions, calligraphy and visual campaigns.'],
-  ['Information & Outreach Coordinator', 'Partnerships with schools and institutions.'],
+  ['Dramatics Club Coordinator', 'Stage plays and street theatre with a message.'],
+  ['Information & Outreach Coordinator', 'Partnerships with institutions.'],
   ['Media Club Coordinator', 'Leads Hope Media Cell and all coverage.'],
-  ['Peace League Coordinator', 'Sports, tours and capacity-building.'],
+  ['Peace League Coordinator', 'Sports, plantation drives, peace walks and cleanliness drives.'],
+  ['Technical & Innovation Coordinator', 'Leads the Technical Experts department and digital tools.'],
 ].map(([r, b]) => ({ n: 'Member name', r, b }));
 
 export const advisors: { n: string; r: string; photo?: string }[] = ['Education', 'Civil society', 'Media', 'Public policy'].map((r) => ({ n: 'Advisor name', r: 'Advisor · ' + r }));
+
+export const alumniForum = {
+  d: 'Hopians who have completed the volunteer path and served on a cabinet stay connected through the Alumni Forum: mentoring new Change Makers, sitting on the Executive & Ambassador Assemblies and the Board of Directors, and keeping HOPE’s institutional memory alive.',
+};
 
 /** [city, province, embassies, lat, lng, isHQ] */
 export const chapters: [string, string, number, number, number, boolean?][] = [
@@ -113,9 +122,9 @@ export const featuredFilm = { title: 'Hope Day 2026', length: '3:42', youtubeId:
 
 export const faq: Record<string, [string, string][]> = {
   Joining: [
-    ['Who can become a member?', 'Anyone directly or indirectly linked with an educational institution: school, college or university students, and teachers. Membership is open to all, regardless of race, colour, religion, language or sect.'],
+    ['Who can become a member?', 'Anyone directly or indirectly linked with an educational institution: college or university students. Membership is open to all, regardless of race, colour, religion, language or sect.'],
     ['When can I join?', 'We run two membership drives a year, in January and July. You can apply anytime and we’ll place you in the next intake.'],
-    ['Is there a membership fee?', 'Membership is free. Some events may have a small registration fee to cover costs.'],
+    ['Is there a membership fee?', 'Yes, a small commitment fee is charged to every member. It isn’t a cost to cover: it’s there to give each member a real stake in their own growth and learning.'],
     ['What is a Hopian?', 'A Hopian is a registered member of Hope Society Pakistan who has joined a department and takes part in its programs.'],
   ],
   Volunteering: [
@@ -125,7 +134,7 @@ export const faq: Record<string, [string, string][]> = {
   ],
   Chapters: [
     ['What is an embassy?', 'An embassy is HOPE inside a single institution, run by its students under the guidance of the local chapter cabinet.'],
-    ['How do I start an embassy at my school?', 'Gather three to five students, contact your nearest chapter focal person, and they will guide you through approval.'],
+    ['How do I start an embassy at my campus?', 'Gather three to five students, contact your nearest chapter focal person, and they will guide you through approval.'],
     ['Where is the headquarters?', 'Our Federal Office is in Islamabad.'],
   ],
 };

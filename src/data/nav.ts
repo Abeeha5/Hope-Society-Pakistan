@@ -6,7 +6,8 @@ export const navGroups: NavGroup[] = [
     label: 'About', href: '/about',
     items: [
       { label: 'About us', href: '/about', sub: 'Our story, philosophy and milestones' },
-      { label: 'Leadership', href: '/team', sub: 'Federal cabinet and advisors' },
+      { label: 'Leadership', href: '/team', sub: 'Federal cabinet' },
+      { label: 'Board & alumni', href: '/advisors', sub: 'Board of Advisors and the Alumni Forum' },
       { label: 'Our impact', href: '/impact', sub: 'Five years in numbers' },
       { label: 'FAQ', href: '/faq', sub: 'Joining, volunteering, embassies' },
     ],
@@ -22,7 +23,7 @@ export const navGroups: NavGroup[] = [
   {
     label: 'Community', href: '/departments',
     items: [
-      { label: 'Departments & clubs', href: '/departments', sub: 'Five ways to belong' },
+      { label: 'Departments & clubs', href: '/departments', sub: 'Six ways to belong' },
       { label: 'Chapters & embassies', href: '/chapters', sub: 'Find HOPE near you' },
       { label: 'Contact', href: '/contact', sub: 'Reach the federal office' },
     ],

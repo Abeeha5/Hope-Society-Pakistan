@@ -16,9 +16,9 @@ export const site = {
   socials: {
     // TODO: confirm these URLs
     instagram: { label: 'hope_society_pakistan', url: 'https://www.instagram.com/hope_society_pakistan/' },
-    facebook: { label: 'HOPE Society Pakistan', url: 'https://www.facebook.com/' },
-    linkedin: { label: 'Hope Society Pakistan', url: 'https://www.linkedin.com/' },
-    youtube: { label: 'Hope Media Cell', url: 'https://www.youtube.com/' },
+    facebook: { label: 'HOPE Society Pakistan', url: 'https://www.facebook.com/share/1FPS2FXmB6/' },
+    linkedin: { label: 'Hope Society Pakistan', url: 'https://www.linkedin.com/company/hope-society-pakistan-attock-chapter/' },
+    youtube: { label: 'Hope Media Cell', url: 'https://youtube.com/@hopesocietypakistan?si=defKmltbaRWGA3mI' },
   },
 
   /**
@@ -44,10 +44,10 @@ export const site = {
 };
 
 export const stats = [
-  { n: 300, suffix: '+', label: 'Members' },
+  { n: 500, suffix: '+', label: 'Members' },
   { n: 100, suffix: '+', label: 'Interns' },
-  { n: 1200, suffix: '+', label: 'Volunteers' },
-  { n: 50, suffix: '+', label: 'Events' },
-  { n: 30, suffix: '+', label: 'Campaigns' },
-  { n: 11, suffix: 'k+', label: 'Followers' },
+  { n: 1500, suffix: '+', label: 'Volunteers' },
+  { n: 70, suffix: '+', label: 'Events' },
+  { n: 50, suffix: '+', label: 'Campaigns' },
+  { n: 10, suffix: 'k+', label: 'Followers' },
 ];

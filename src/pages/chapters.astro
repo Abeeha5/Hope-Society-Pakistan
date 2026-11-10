@@ -5,10 +5,10 @@ import ChapterMap from '../components/ChapterMap.astro';
 import { chapters } from '../data/content';
 
 const levels = [
-  { t: 'Federal Cabinet', d: 'Ten members based at the Islamabad headquarters. Sets the national program and supports every province.', c: '#F6C232' },
+  { t: 'Federal Cabinet', d: '13 members based at the Islamabad headquarters. Sets the national program and supports every province.', c: '#F6C232' },
   { t: 'Provincial Cabinets', d: 'The bridge between the federal cabinet and the chapters in each province.', c: '#1D4D9F' },
-  { t: 'Chapter Cabinets', d: 'One per major city or region. Nine coordinators supervising local embassies and teams.', c: '#C9D5EE' },
-  { t: 'Embassies', d: 'Hope inside a school, college or university, run by its students.', c: '#EEF1F8' },
+  { t: 'Chapter Cabinets', d: 'One per major city or region. 13 coordinators supervising local embassies and teams.', c: '#C9D5EE' },
+  { t: 'Embassies', d: 'Hope inside a college or university, run by its students.', c: '#EEF1F8' },
 ];
 const provinces = ['All', 'Punjab', 'Sindh', 'Khyber Pakhtunkhwa', 'Balochistan'];
 const steps = [
@@ -19,8 +19,8 @@ const steps = [
 ];
 const hq = chapters[0];
 ---
-<Base title="Chapters & Embassies" description="Chapters in every province and embassies inside schools, colleges and universities, all connected to the federal office in Islamabad.">
-  <PageHero crumb="Chapters & embassies" title="From Islamabad" accent="to your campus." lede="Chapters in every province and embassies inside schools, colleges and universities, all connected to the federal office in Islamabad." />
+<Base title="Chapters & Embassies" description="Chapters in every province and embassies inside colleges and universities, all connected to the federal office in Islamabad.">
+  <PageHero crumb="Chapters & embassies" title="From Islamabad" accent="to your campus." lede="Chapters in every province and embassies inside colleges and universities, all connected to the federal office in Islamabad." />
 
   <section class="wrap grid-auto" style="--min:440px;--gap:56px;align-items:center;padding-top:clamp(48px,6vw,80px);padding-bottom:clamp(48px,6vw,80px)">
     <div class="rings" aria-hidden="true">
@@ -73,7 +73,7 @@ const hq = chapters[0];
   <section id="start" class="wrap" style="padding-top:clamp(64px,8vw,112px);padding-bottom:clamp(64px,8vw,112px);scroll-margin-top:80px">
     <div class="start bg-navy grid-auto" style="--min:320px;--gap:48px">
       <div>
-        <div class="eyebrow gold">No embassy at your school?</div>
+        <div class="eyebrow gold">No embassy at your campus?</div>
         <h2 class="display d900" style="font-size:clamp(44px,5.5vw,80px);line-height:.88">Start one.</h2>
         <p style="margin:20px 0 0;font-size:17px;line-height:1.6;color:rgba(255,255,255,.8);max-width:400px">An embassy brings HOPE into a single institution, under the guidance of the nearest chapter cabinet.</p>
         <a href="/contact?topic=Start%20an%20embassy" class="btn btn-gold" style="margin-top:28px">Propose an embassy</a>

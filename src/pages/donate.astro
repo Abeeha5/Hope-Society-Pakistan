@@ -8,7 +8,7 @@ const amounts: [number, string][] = [
   [1000, 'covers stationery for one campus workshop.'],
   [2500, 'sponsors a student’s seat at the Youth Symposium.'],
   [5000, 'funds prizes for an Iqbal Festival competition.'],
-  [10000, 'helps open a new embassy at a school.'],
+  [10000, 'helps open a new embassy at a college or university.'],
 ];
 const tiers = [{ n: 'Event partner', p: 'Single event', d: 'Branding at one flagship event and a mention across our channels.' }, { n: 'Season sponsor', p: '6 months', d: 'Branding on a full drive season, plus a seat at the Executive Summit.' }, { n: 'Founding patron', p: 'Annual', d: 'Year-round partnership, newsletter feature and campus outreach.' }];
 const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
@@ -64,7 +64,7 @@ const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
 
       <div data-panel="Partner" hidden data-form-wrap>
         <form data-form="partnership" data-endpoint={site.formsEndpoint} data-email={site.email} novalidate>
-          <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.82)">Schools, universities, NGOs, media and government bodies: co-host an event, open an embassy or run a joint campaign.</p>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:rgba(255,255,255,.82)">Schools, colleges, universities, NGOs, media and government bodies: co-host an event, run a joint campaign, or, for colleges and universities, open an embassy.</p>
           <div style="display:grid;gap:10px">
             <label class="field" data-validate="required"><span class="sr-only">Organisation name</span><input class="input" name="organisation" placeholder="Organisation name" style="border:0" /><span class="err">Please add your organisation</span></label>
             <label class="field" data-validate="email"><span class="sr-only">Your email</span><input class="input" name="email" type="email" placeholder="Your email" style="border:0" /><span class="err">Enter a valid email</span></label>
