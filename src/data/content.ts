@@ -38,19 +38,19 @@ export const homePrograms = [
 ];
 
 export const hope = [
-  { l: 'H', w: 'Harmony', d: 'Peace, unity and social cohesion among individuals and communities.', icon: 'handshake' },
-  { l: 'O', w: 'Opportunity', d: 'Education, skill development and socio-economic growth for all.', icon: 'lightbulb' },
-  { l: 'P', w: 'Patriotism', d: 'Love for Pakistan through cultural heritage and national identity.', icon: 'landmark' },
-  { l: 'E', w: 'Empowerment', d: 'Youth, students and women as active contributors to society.', icon: 'trending-up' },
+  { l: 'H', w: 'Harmony', d: 'Peace, unity and social cohesion among individuals and communities.', icon: '/icons/hope/harmony.svg' },
+  { l: 'O', w: 'Opportunity', d: 'Education, skill development and socio-economic growth for all.', icon: '/icons/hope/opportunity.svg' },
+  { l: 'P', w: 'Patriotism', d: 'Love for Pakistan through cultural heritage and national identity.', icon: '/icons/hope/patriotism.svg' },
+  { l: 'E', w: 'Empowerment', d: 'Youth, students and women as active contributors to society.', icon: '/icons/hope/empowerment.svg' },
 ];
 
 export const milestones: { y: string; icon: string; items: string[] }[] = [
-  { y: '2021', icon: 'flag', items: ['Hope Society Pakistan founded in Lahore', 'Iqbal Festival 1.0', 'Hope Media Cell launched'] },
-  { y: '2022', icon: 'building', items: ['Islamabad chapter opens', 'First federal cabinet', 'First symposium, held in Lahore', 'Hussain The Global Hope 1.0'] },
-  { y: '2023', icon: 'map-pin', items: ['Campus embassies established', 'Work on the manifesto begins'] },
-  { y: '2024', icon: 'star', items: ['Iqbal Festival held at Aiwan-e-Iqbal', 'Chapters strengthened nationwide'] },
-  { y: '2025', icon: 'users', items: ['1,200+ volunteers reached', '50+ events held', 'Chapters expand to Gilgit-Baltistan, Quetta, Attock and Jhang'] },
-  { y: '2026', icon: 'rocket', items: ['Manifesto revised', 'New website launches'] },
+  { y: '2021', icon: '/icons/road/seedling.svg', items: ['Hope Society Pakistan founded in Lahore', 'Iqbal Festival 1.0', 'Hope Media Cell launched'] },
+  { y: '2022', icon: '/icons/road/building.svg', items: ['Islamabad chapter opens', 'First federal cabinet', 'First symposium, held in Lahore', 'Hussain The Global Hope 1.0'] },
+  { y: '2023', icon: '/icons/road/pin.svg', items: ['Campus embassies established', 'Work on the manifesto begins'] },
+  { y: '2024', icon: '/icons/road/star.svg', items: ['Iqbal Festival held at Aiwan-e-Iqbal', 'Chapters strengthened nationwide'] },
+  { y: '2025', icon: '/icons/road/people.svg', items: ['1,200+ volunteers reached', '50+ events held', 'Chapters expand to Gilgit-Baltistan, Quetta, Attock and Jhang'] },
+  { y: '2026', icon: '/icons/road/rocket.svg', items: ['Manifesto revised', 'New website launches'] },
 ];
 
 export const chairman = { name: 'Husayn Paras Naqvi', role: 'Chairman, Hope Society Pakistan', bio: 'Founder of Hope Society Pakistan and author of its manifesto.', photo: '/images/chairman.png' as string | undefined };

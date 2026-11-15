@@ -13,8 +13,8 @@ const badgeEvent = upcoming.find((e) => e.data.registration) ?? upcoming[0];
 ---
 <Base footerCta>
   <!-- HERO -->
-  <section class="bg-navy rel" style="overflow:hidden">
-    <div class="rays" style="left:50%;top:-8%;width:1800px;height:1800px;transform:translateX(-12%);background:repeating-conic-gradient(from 0deg,rgba(246,194,50,.10) 0deg .8deg,transparent .8deg 5deg);-webkit-mask:radial-gradient(circle,#000 0 30%,transparent 62%);mask:radial-gradient(circle,#000 0 30%,transparent 62%)"></div>
+  <section class="bg-navy rel hero-sec" style="overflow:hidden">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="wrap rel hero">
       <div style="padding-bottom:clamp(40px,6vw,96px)">
         <h1 class="h1" style="font-size:clamp(64px,9.4vw,148px)">Rebuild<br />Pakistan<br /><span class="gold">with hope.</span></h1>
@@ -162,9 +162,25 @@ const badgeEvent = upcoming.find((e) => e.data.registration) ?? upcoming[0];
     });
     nums.forEach((el) => io.observe(el));
   }
+
+  // Hero glow follows the pointer on devices with a real mouse.
+  const heroSec = document.querySelector<HTMLElement>('.hero-sec');
+  const glow = document.querySelector<HTMLElement>('.hero-glow');
+  if (heroSec && glow && matchMedia('(pointer: fine)').matches) {
+    heroSec.addEventListener('mousemove', (e) => {
+      const r = heroSec.getBoundingClientRect();
+      glow.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+      glow.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+    });
+    heroSec.addEventListener('mouseleave', () => {
+      glow.style.setProperty('--mx', '62%');
+      glow.style.setProperty('--my', '35%');
+    });
+  }
 </script>
 
 <style>
+  .hero-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(640px circle at var(--mx,62%) var(--my,35%), rgba(246,194,50,.18), transparent 60%); }
   .hero { padding-top: clamp(48px,7vw,96px); display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,460px),1fr)); gap: 48px; align-items: end; }
   .hero-img { position: relative; justify-self: center; width: min(100%,560px); aspect-ratio: 5/6; }
   .arch-top { position: absolute; inset: 0; border-radius: 999px 999px 0 0; overflow: hidden; background: var(--blue); }

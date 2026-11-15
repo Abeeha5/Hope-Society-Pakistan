@@ -33,7 +33,6 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: 'Gallery', href: '/gallery', sub: 'Photos and films by Hope Media Cell' },
       { label: 'Blog', href: '/blog', sub: 'The Hope Journal' },
-      { label: 'Library', href: '/library', sub: 'Books and PDFs to read free' },
     ],
   },
 ];

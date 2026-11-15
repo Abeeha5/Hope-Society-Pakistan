@@ -40,25 +40,4 @@ const blog = defineCollection({
   }),
 });
 
-/**
- * LIBRARY — one JSON file per book in src/content/library/.
- * `file` is either a full URL (e.g. on Cloudflare R2) or a file name that is
- * resolved against `site.libraryBaseUrl` in src/data/site.ts.
- */
-const library = defineCollection({
-  loader: glob({ pattern: '**/*.json', base: './src/content/library' }),
-  schema: z.object({
-    title: z.string(),
-    author: z.string(),
-    genre: z.string(),
-    language: z.string().default('English'),
-    year: z.union([z.string(), z.number()]).optional(),
-    pages: z.number().optional(),
-    description: z.string().optional(),
-    cover: z.string().optional(),
-    file: z.string(),
-    added: z.coerce.date().optional(),
-  }),
-});
-
-export const collections = { events, blog, library };
+export const collections = { events, blog };

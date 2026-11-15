@@ -27,13 +27,6 @@ export const site = {
    * paste its URL here, or set PUBLIC_FORMS_ENDPOINT in your host's env vars.
    */
   formsEndpoint: import.meta.env.PUBLIC_FORMS_ENDPOINT || '',
-
-  /**
-   * Base URL for library PDFs. Leave as '/library/' while PDFs live in
-   * public/library. When you move them to Cloudflare R2, change this to the
-   * bucket's public URL, e.g. 'https://library.hopesocietypakistan.com/'.
-   */
-  libraryBaseUrl: import.meta.env.PUBLIC_LIBRARY_BASE_URL || '/library/',
 };
 
 export const stats = [
