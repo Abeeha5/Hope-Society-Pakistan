@@ -39,15 +39,8 @@ const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
           {amounts.map(([n, line], i) => <button aria-pressed={i === 1 ? 'true' : 'false'} data-value={n} data-line={line}>{fmt(n)}</button>)}
         </div>
         <div class="impact"><strong data-amt>{fmt(2500)}</strong><strong data-freq></strong> <span style="color:rgba(255,255,255,.85)" data-line>{amounts[1][1]}</span></div>
-        <button type="button" class="btn btn-gold btn-block" style="margin-top:22px" data-donate>Donate <span data-amt>{fmt(2500)}</span></button>
-        <div class="pay" data-pay hidden>
-          <div style="font-weight:700;font-size:15px;margin-bottom:10px">Send <span data-amt>{fmt(2500)}</span><span data-freq></span> to any of these:</div>
-          {site.payments.map((p) => (
-            <div class="acct"><div class="gold" style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase">{p.method}</div><div style="font-weight:700;margin-top:4px">{p.title}</div><div style="font-family:ui-monospace,monospace;font-size:14px;margin-top:2px;user-select:all">{p.detail}</div></div>
-          ))}
-          <p style="margin:12px 0 0;font-size:14px;line-height:1.5;color:rgba(255,255,255,.75)">Then WhatsApp a screenshot to <a href={site.whatsapp} class="gold">{site.phone}</a> or email <a href={`mailto:${site.email}?subject=Donation%20receipt`} class="gold">{site.email}</a> and we'll send your receipt.</p>
-        </div>
-        <p class="form-note" style="color:rgba(255,255,255,.6)">Bank transfer, JazzCash or Easypaisa. Receipts sent by email.</p>
+        <a href={`mailto:${site.email}?subject=Donation&body=I'd like to donate ${fmt(2500)}.`} class="btn btn-gold btn-block" style="margin-top:22px" data-donate-link data-donate-base={`mailto:${site.email}?subject=Donation&body=I'd like to donate `}>Arrange this donation</a>
+        <p class="form-note" style="color:rgba(255,255,255,.6)">We'll reply by email with bank transfer, JazzCash or Easypaisa details and send a receipt once it's through.</p>
       </div>
 
       <div data-panel="Sponsor" hidden>
@@ -96,9 +89,11 @@ const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
 
   const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
   let amt = 2500, monthly = false;
+  const donateLink = document.querySelector<HTMLAnchorElement>('[data-donate-link]')!;
   const render = () => {
     document.querySelectorAll('[data-amt]').forEach((e) => (e.textContent = fmt(amt)));
     document.querySelectorAll('[data-freq]').forEach((e) => (e.textContent = monthly ? '/month' : ''));
+    donateLink.href = donateLink.dataset.donateBase + fmt(amt) + (monthly ? ' per month' : '') + '.';
   };
   document.querySelector('.amts')!.addEventListener('change', (e) => {
     amt = +(e as CustomEvent).detail;
@@ -107,10 +102,6 @@ const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
     render();
   });
   document.querySelector('.freq')!.addEventListener('change', (e) => { monthly = (e as CustomEvent).detail === 'monthly'; render(); });
-  document.querySelector('[data-donate]')!.addEventListener('click', () => {
-    const pay = document.querySelector<HTMLElement>('[data-pay]')!;
-    pay.hidden = false; pay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
 </script>
 
 <style>
@@ -129,7 +120,5 @@ const fmt = (n: number) => 'PKR ' + n.toLocaleString('en-US');
   .amts button:hover { border-color: rgba(255,255,255,.5); }
   .amts button[aria-pressed="true"] { border-color: var(--gold); background: var(--gold); color: var(--navy); }
   .impact { margin-top: 22px; padding: 20px; border-radius: 18px; background: rgba(246,194,50,.12); color: var(--gold); font-size: 15px; line-height: 1.5; }
-  .pay { margin-top: 18px; padding: 20px; border-radius: 18px; background: rgba(255,255,255,.06); display: grid; gap: 10px; }
-  .acct { padding: 12px 14px; border-radius: 12px; background: rgba(255,255,255,.06); }
   .tier { border-radius: 20px; border: 1.5px solid rgba(255,255,255,.15); padding: 22px; }
 </style>

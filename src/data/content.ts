@@ -28,13 +28,6 @@ export const otherDepartments: { anchor: string; n: string; t: string; d: string
   { anchor: 'vol', n: '06', t: 'Volunteers, Fellowships & Internships', d: 'Your on-ramp. Volunteer at events, take on a fellowship, or intern with a department, and grow from Change Maker to Peace Maker to Shaheen.', u: '1,500+ volunteers · 100+ interns', photo: '/images/monument-vests.jpg' },
 ];
 
-// TODO: replace with real, consented testimonials
-export const voices: { q: string; name: string; role: string; photo?: string }[] = [
-  { q: "I joined as a volunteer for one event. Two years later I'm running the poetry club at my university.", name: 'Ayesha K.', role: 'Poetry Club Coordinator, Lahore chapter' },
-  { q: 'HOPE gave me a stage before I knew I needed one. My first debate was at the Iqbal Festival.', name: 'Hamza R.', role: 'Embassy Lead, Peshawar' },
-  { q: "We started an embassy with four friends. Now it's the most active society on campus.", name: 'Zainab M.', role: 'Peace Maker, Karachi chapter' },
-];
-
 export const signaturePrograms = ['Iqbal Festival', 'Peace Conference', 'Hope Day', 'Youth Symposium', 'Executive Summit', 'Hope Circle', 'Hussain The Global Hope', 'Webinars & Workshops'];
 
 export const homePrograms = [
@@ -45,10 +38,10 @@ export const homePrograms = [
 ];
 
 export const hope = [
-  { l: 'H', w: 'Harmony', d: 'Peace, unity and social cohesion among individuals and communities.', icon: 'harmony' },
-  { l: 'O', w: 'Opportunity', d: 'Education, skill development and socio-economic growth for all.', icon: 'opportunity' },
-  { l: 'P', w: 'Patriotism', d: 'Love for Pakistan through cultural heritage and national identity.', icon: 'patriotism' },
-  { l: 'E', w: 'Empowerment', d: 'Youth, students and women as active contributors to society.', icon: 'empowerment' },
+  { l: 'H', w: 'Harmony', d: 'Peace, unity and social cohesion among individuals and communities.', icon: 'handshake' },
+  { l: 'O', w: 'Opportunity', d: 'Education, skill development and socio-economic growth for all.', icon: 'lightbulb' },
+  { l: 'P', w: 'Patriotism', d: 'Love for Pakistan through cultural heritage and national identity.', icon: 'landmark' },
+  { l: 'E', w: 'Empowerment', d: 'Youth, students and women as active contributors to society.', icon: 'trending-up' },
 ];
 
 export const milestones: { y: string; icon: string; items: string[] }[] = [
@@ -60,9 +53,9 @@ export const milestones: { y: string; icon: string; items: string[] }[] = [
   { y: '2026', icon: 'rocket', items: ['Manifesto revised', 'New website launches'] },
 ];
 
-export const chairman = { name: 'Husayn Paras Naqvi', role: 'Chairman, Hope Society Pakistan', bio: 'Founder of Hope Society Pakistan and author of its manifesto.', photo: undefined as string | undefined };
+export const chairman = { name: 'Husayn Paras Naqvi', role: 'Chairman, Hope Society Pakistan', bio: 'Founder of Hope Society Pakistan and author of its manifesto.', photo: '/images/chairman.png' as string | undefined };
 
-// TODO: fill in real names and photos
+// TODO: fill in real names and photos, then bring back photo frames in team.astro
 export const cabinet: { n: string; r: string; b: string; photo?: string }[] = [
   ['President', 'Leads the federal cabinet and the society’s annual program.'],
   ['Vice President', 'Supports the president and steps in across chapters.'],
@@ -101,20 +94,16 @@ export const chapters: [string, string, number, number, number, boolean?][] = [
   ['Muzaffarabad', 'Azad Kashmir', 2, 34.37, 73.4711],
 ];
 
-/** Gallery wall. `h` is the tile height on desktop. */
-export const gallery: { cat: 'Events' | 'Clubs' | 'Peace League'; cap: string; h: number; photo?: string }[] = [
-  { cat: 'Events', cap: 'Iqbal Festival', h: 320 },
-  { cat: 'Clubs', cap: 'Poetry night', h: 220 },
-  { cat: 'Events', cap: 'Hussain The Global Hope peace walk', h: 260, photo: '/images/peace-walk.jpg' },
-  { cat: 'Peace League', cap: 'Football league', h: 260 },
-  { cat: 'Clubs', cap: 'Art exhibition', h: 340 },
+/**
+ * Gallery wall. `h` is the tile height on desktop. Only real photos are
+ * listed here — add an entry (with `photo`) as soon as a new one is ready,
+ * rather than padding the wall with placeholder tiles.
+ */
+export const gallery: { cat: 'Events' | 'Clubs' | 'Peace League'; cap: string; h: number; photo: string }[] = [
+  { cat: 'Events', cap: 'Hussain The Global Hope peace walk', h: 320, photo: '/images/peace-walk.jpg' },
   { cat: 'Events', cap: 'At Minar-e-Pakistan', h: 400, photo: '/images/minar-e-pakistan.jpg' },
   { cat: 'Peace League', cap: 'Pakistan Monument visit', h: 300, photo: '/images/monument-vests.jpg' },
-  { cat: 'Events', cap: 'Youth Symposium', h: 380 },
-  { cat: 'Clubs', cap: 'Dramatics', h: 240 },
-  { cat: 'Peace League', cap: 'Workshop', h: 280 },
   { cat: 'Peace League', cap: 'Pakistan Monument at dusk', h: 300, photo: '/images/monument-backs.jpg' },
-  { cat: 'Clubs', cap: 'Music evening', h: 230 },
 ];
 
 /** Featured film on the gallery page. Put a YouTube video ID to make it play. */

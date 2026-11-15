@@ -14,14 +14,14 @@ const isActive = (g: (typeof navGroups)[number]) =>
     <nav class="desk-nav" aria-label="Main">
       {navGroups.map((g) => (
         <div class="dd">
-          <a href={g.href} class:list={['top', { active: isActive(g) }]}>{g.label}</a>
+          <a href={g.href} class:list={['top', { active: isActive(g) }]} aria-haspopup="true" aria-expanded="false">{g.label}</a>
           <div class="menu"><div class="menu-in">
             {g.items.map((i) => <a href={i.href}><b>{i.label}</b><span>{i.sub}</span></a>)}
           </div></div>
         </div>
       ))}
       <div class="dd right">
-        <a href="/get-involved" class="btn btn-gold btn-sm cta">Join &amp; support</a>
+        <a href="/get-involved" class="btn btn-gold btn-sm cta" aria-haspopup="true" aria-expanded="false">Join &amp; support</a>
         <div class="menu"><div class="menu-in">
           {ctaItems.map((i) => <a href={i.href}><b>{i.label}</b><span>{i.sub}</span></a>)}
         </div></div>
@@ -62,6 +62,33 @@ const isActive = (g: (typeof navGroups)[number]) =>
   panel?.addEventListener('click', (e) => {
     if ((e.target as HTMLElement).closest('a')) { btn?.click(); }
   });
+
+  // On devices with no real hover (touch laptops, landscape tablets above the
+  // mobile breakpoint), CSS :hover never opens the dropdowns, which would
+  // silently hide every submenu item. First tap opens the menu instead of
+  // following the link; a second tap (or any tap inside the open menu) follows it.
+  if (matchMedia('(hover: none)').matches) {
+    const tops = document.querySelectorAll<HTMLAnchorElement>('.dd > .top, .dd.right > .cta');
+    const closeAll = (except?: HTMLElement) => {
+      tops.forEach((t) => {
+        if (t.parentElement !== except) { t.parentElement?.classList.remove('open'); t.setAttribute('aria-expanded', 'false'); }
+      });
+    };
+    tops.forEach((top) => {
+      top.addEventListener('click', (e) => {
+        const dd = top.parentElement!;
+        if (!dd.classList.contains('open')) {
+          e.preventDefault();
+          closeAll(dd);
+          dd.classList.add('open');
+          top.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!(e.target as HTMLElement).closest('.dd')) closeAll();
+    });
+  }
 </script>
 
 <style>
@@ -86,7 +113,7 @@ const isActive = (g: (typeof navGroups)[number]) =>
   .cta { margin-left: 12px; }
   .menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); padding-top: 12px; z-index: 60; visibility: hidden; opacity: 0; transition: opacity .15s, visibility .15s; }
   .dd.right .menu { left: auto; right: 0; transform: none; }
-  .dd:hover .menu, .dd:focus-within .menu { visibility: visible; opacity: 1; }
+  .dd:hover .menu, .dd:focus-within .menu, .dd.open .menu { visibility: visible; opacity: 1; }
   .menu-in { width: 300px; background: #fff; border-radius: 20px; padding: 8px; box-shadow: 0 24px 60px rgba(11,36,87,.18); border: 1px solid rgba(18,25,51,.08); display: flex; flex-direction: column; }
   .menu-in a { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border-radius: 14px; text-decoration: none; color: var(--navy); }
   .menu-in a:hover { background: var(--sand); }

@@ -13,7 +13,7 @@ import { clubs, otherDepartments } from '../data/content';
         <div><div class="display d900 blue" style="font-size:22px">01</div><h2 class="display d900 navy" style="margin-top:10px;font-size:clamp(44px,5.5vw,80px);line-height:.88">Creative Arts &amp; Literature</h2></div>
         <div style="align-self:end"><p class="body" style="margin:0;font-size:18px;line-height:1.6">The literary heart of HOPE. Five clubs that write, recite, paint, perform and publish, from open mics to the yearly newsletter.</p><div class="navy" style="margin-top:16px;font-size:14px;font-weight:700">What you'll do: run workshops, enter competitions, publish your work.</div></div>
       </div>
-      <div class="clubs reveal">
+      <div class="clubs">
         {clubs.map((c) => (
           <div class="club">
             <div style="height:190px"><Photo src={c.photo} label="Club photo" /></div>
@@ -40,7 +40,7 @@ import { clubs, otherDepartments } from '../data/content';
 
   <section class="wrap" style="padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(40px,5vw,72px)">
     {otherDepartments.map((r) => (
-      <div id={r.anchor} class="dept reveal">
+      <div id={r.anchor} class="dept">
         <div><div class="display d900 blue" style="font-size:22px">{r.n}</div><h2 class="display d900 navy" style="margin-top:10px;font-size:clamp(40px,4.6vw,64px);line-height:.9">{r.t}</h2></div>
         <div><p class="body" style="margin:0">{r.d}</p><div class="muted" style="margin-top:20px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase">Teams</div><div class="navy" style="margin-top:6px;font-size:16px;font-weight:600">{r.u}</div></div>
         <div style="height:240px;border-radius:24px;overflow:hidden"><Photo src={r.photo} label="Department photo" /></div>

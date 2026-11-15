@@ -40,7 +40,7 @@ const collabs: { t: string; d: string }[] = [
     <div class="eyebrow">Success stories</div>
     <div style="display:grid;gap:56px">
       {stories.map((s) => (
-        <article class="grid-auto reveal" style="--min:380px;--gap:40px;align-items:center">
+        <article class="grid-auto" style="--min:380px;--gap:40px;align-items:center">
           <div style="aspect-ratio:4/3;border-radius:28px;overflow:hidden"><Photo src={s.photo} label="Story photo" /></div>
           <div>
             <div class="muted" style="font-size:13px;font-weight:700">{s.tag}</div>

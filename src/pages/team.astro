@@ -20,14 +20,14 @@ import { cabinet, chairman } from '../data/content';
 
   <section class="wrap" style="padding-bottom:clamp(64px,8vw,112px)">
     <div class="head">
-      <h2 class="display" style="font-size:clamp(40px,5vw,64px)">Federal Cabinet <span style="color:var(--faint)">2026-27</span></h2>
+      <h2 class="display" style="font-size:clamp(40px,5vw,64px)">Federal Cabinet <span class="muted">2026-27</span></h2>
       <span class="muted" style="font-size:14px">Islamabad headquarters · {cabinet.length} members</span>
     </div>
-    <div class="cab reveal">
+    <div class="cab">
       {cabinet.map((m) => (
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div style="aspect-ratio:4/5" class="arch"><Photo src={m.photo} label="Photo" /></div>
-          <div><div style="font-weight:700;font-size:17px">{m.n}</div><div class="blue" style="margin-top:3px;font-size:14px;font-weight:600">{m.r}</div><div class="muted" style="margin-top:6px;font-size:13px;line-height:1.5">{m.b}</div></div>
+        <div class="cab-row">
+          <div style="font-weight:700;font-size:18px">{m.r}</div>
+          <div class="muted" style="margin-top:8px;font-size:13px;line-height:1.55">{m.b}</div>
         </div>
       ))}
     </div>
@@ -46,6 +46,7 @@ import { cabinet, chairman } from '../data/content';
   .chair-img { aspect-ratio: 3/4; border-radius: 999px 999px 18px 18px; background: var(--blue); }
   @media (max-width: 520px) { .chair { grid-template-columns: 1fr; } .chair-img { max-width: 200px; } }
   .head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin: 48px 0 32px; padding-top: 40px; border-top: 1px solid var(--line); }
-  .cab { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%,220px),1fr)); gap: 36px 18px; }
-  @media (max-width: 520px) { .cab { grid-template-columns: repeat(2, 1fr); } }
+  .cab { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%,260px),1fr)); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .cab-row { padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  @media (max-width: 560px) { .cab { grid-template-columns: 1fr; } }
 </style>

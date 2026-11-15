@@ -4,12 +4,23 @@ import PageHero from '../components/PageHero.astro';
 import Photo from '../components/Photo.astro';
 import Icon from '../components/Icon.astro';
 import { hope, milestones, chairman } from '../data/content';
+
+const n = milestones.length;
+const trackW = Math.max(n * 230, 900);
+const roadmap = milestones.map((m, i) => ({
+  year: m.y,
+  icon: m.icon,
+  items: m.items,
+  x: Math.round(((i + 0.5) / n) * trackW),
+  posY: i % 2 === 0 ? 110 : 310,
+}));
+const linePoints = roadmap.map((p) => `${p.x},${p.posY}`).join(' ');
 ---
 <Base title="About" description="Since 2021, a youth-led federation of chapters and campus embassies rebuilding Pakistan through conscious youth, intellectual growth and responsible leadership.">
   <PageHero crumb="About us" title="Since" accent="2021." lede="A youth-led federation of chapters and campus embassies, rebuilding Pakistan through conscious youth, intellectual growth and responsible leadership." image="/images/monument-backs.jpg" imageLabel="Group photo" />
 
   <section class="wrap" style="padding-top:clamp(72px,9vw,128px);padding-bottom:clamp(72px,9vw,128px)">
-    <div class="grid-auto reveal" style="--min:300px;--gap:56px;align-items:start">
+    <div class="grid-auto" style="--min:300px;--gap:56px;align-items:start">
       <div style="display:flex;flex-direction:column;gap:16px;max-width:380px">
         <div style="aspect-ratio:4/5;border-radius:24px;overflow:hidden"><Photo src={chairman.photo} label="Chairman portrait" /></div>
         <div><div style="font-weight:700;font-size:17px">{chairman.name}</div><div class="muted" style="font-size:14px">{chairman.role}</div></div>
@@ -56,48 +67,44 @@ import { hope, milestones, chairman } from '../data/content';
       <h2 class="display h2">Milestones</h2>
       <a href="/team" class="btn btn-outline btn-sm">Meet the leadership</a>
     </div>
-    <ol class="zigzag reveal">
-      {milestones.map((m, i) => (
-        <li class={i % 2 === 0 ? 'zz-left' : 'zz-right'}>
-          <div class="zz-card">
-            <div class="display d900 blue" style="font-size:40px;line-height:1">{m.y}</div>
-            <ul class="zz-list">
+    <p class="muted roadmap-hint" style="font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin:0 0 4px">Scroll to explore →</p>
+    <div class="roadmap-wrap reveal">
+      <div class="roadmap" style={`width:${trackW}px`}>
+        <svg class="roadmap-line" viewBox={`0 0 ${trackW} 420`} preserveAspectRatio="none" aria-hidden="true">
+          <polyline points={linePoints} fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="1 12" stroke-linecap="round" />
+        </svg>
+        {roadmap.map((m) => (
+          <div class="rm-card" style={`left:${m.x}px;top:${m.posY}px`}>
+            <div class="rm-icon"><Icon name={m.icon} size={22} /></div>
+            <div class="display d900 blue" style="font-size:32px;line-height:1;margin-top:10px">{m.year}</div>
+            <ul class="rm-list">
               {m.items.map((it) => <li>{it}</li>)}
             </ul>
           </div>
-          <div class="zz-node"><Icon name={m.icon} size={22} /></div>
-        </li>
-      ))}
-    </ol>
+        ))}
+      </div>
+    </div>
   </section>
 </Base>
 
 <style>
-  .pil { background: rgba(255,255,255,.06); padding: clamp(28px,4vw,56px); }
-  .pil-word { font-family: var(--display); font-weight: 900; font-size: clamp(56px,8vw,120px); line-height: .8; text-transform: uppercase; }
-  .pil p { margin: 24px 0 0; font-size: 18px; line-height: 1.65; color: rgba(255,255,255,.84); }
+  .pil { background: rgba(255,255,255,.06); padding: clamp(28px,4vw,56px); overflow: hidden; min-width: 0; }
+  .pil-word { font-family: var(--display); font-weight: 900; font-size: clamp(30px,4.2vw,52px); line-height: 1.05; text-transform: uppercase; overflow-wrap: break-word; }
+  .pil p { margin: 20px 0 0; font-size: 16px; line-height: 1.65; color: rgba(255,255,255,.84); }
   .hope-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,260px),1fr)); }
   .hope-cell { padding: 48px 28px 44px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 14px; transition: background .25s; }
   .hope-cell:hover { background: var(--sand); }
   @media (max-width: 600px) { .hope-cell { border-left: 0; border-bottom: 1px solid var(--line); padding: 36px 0; } }
   .hope-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--navy); color: var(--gold); display: grid; place-items: center; }
 
-  .zigzag { list-style: none; margin: 0; padding: 0; position: relative; }
-  .zigzag::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: repeating-linear-gradient(to bottom, var(--gold) 0 10px, transparent 10px 22px); transform: translateX(-50%); }
-  .zigzag li { position: relative; width: 50%; box-sizing: border-box; padding: 10px 44px 34px; }
-  .zigzag li.zz-left { left: 0; margin-left: 0; }
-  .zigzag li.zz-right { left: 50%; }
-  .zz-card { background: #fff; border: 1.5px solid var(--line); border-radius: 20px; padding: 22px 26px; display: inline-block; max-width: 380px; text-align: left; }
-  .zz-left .zz-card { transform: rotate(-.6deg); }
-  .zz-right .zz-card { transform: rotate(.6deg); }
-  .zz-list { margin: 10px 0 0; padding: 0 0 0 18px; font-size: 14px; line-height: 1.65; color: var(--muted); }
-  .zz-node { position: absolute; top: 10px; width: 46px; height: 46px; border-radius: 50%; background: var(--navy); color: var(--gold); display: grid; place-items: center; border: 3px solid var(--gold); z-index: 1; }
-  .zz-left .zz-node { right: -23px; }
-  .zz-right .zz-node { left: -23px; }
-  @media (max-width: 760px) {
-    .zigzag::before { left: 23px; }
-    .zigzag li, .zigzag li.zz-left, .zigzag li.zz-right { width: 100%; left: 0; padding: 10px 0 34px 64px; }
-    .zz-left .zz-node, .zz-right .zz-node { left: 0; right: auto; }
-    .zz-left .zz-card, .zz-right .zz-card { transform: none; max-width: none; }
-  }
+  .roadmap-hint { display: none; }
+  @media (max-width: 1000px) { .roadmap-hint { display: block; } }
+  .roadmap-wrap { overflow-x: auto; padding: 36px 4px 28px; -webkit-overflow-scrolling: touch; }
+  .roadmap-wrap::-webkit-scrollbar { height: 8px; }
+  .roadmap-wrap::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 999px; }
+  .roadmap { position: relative; height: 420px; max-width: 100%; }
+  .roadmap-line { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .rm-card { position: absolute; transform: translate(-50%,-50%); width: 196px; background: #fff; border: 1.5px solid var(--line); border-radius: 20px; padding: 18px 20px 20px; box-shadow: 0 14px 34px rgba(11,36,87,.08); }
+  .rm-icon { width: 42px; height: 42px; border-radius: 50%; background: var(--navy); color: var(--gold); display: grid; place-items: center; }
+  .rm-list { margin: 10px 0 0; padding: 0 0 0 16px; font-size: 13px; line-height: 1.55; color: var(--muted); }
 </style>

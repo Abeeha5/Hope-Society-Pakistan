@@ -34,13 +34,6 @@ export const site = {
    * bucket's public URL, e.g. 'https://library.hopesocietypakistan.com/'.
    */
   libraryBaseUrl: import.meta.env.PUBLIC_LIBRARY_BASE_URL || '/library/',
-
-  // TODO: replace with the society's real accounts before launch
-  payments: [
-    { method: 'Bank transfer', title: 'Hope Society Pakistan', detail: 'Bank name · IBAN PK00 XXXX 0000 0000 0000 0000' },
-    { method: 'JazzCash', title: 'Account title', detail: '03XX XXXXXXX' },
-    { method: 'Easypaisa', title: 'Account title', detail: '03XX XXXXXXX' },
-  ],
 };
 
 export const stats = [
