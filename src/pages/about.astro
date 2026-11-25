@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import Photo from '../components/Photo.astro';
-import { hope, milestones, chairman } from '../data/content';
+import { hope, milestones, chairman, flagshipProjects } from '../data/content';
 
 const n = milestones.length;
 const trackW = Math.max(n * 230, 900);
@@ -34,7 +34,7 @@ roadLength = Math.round(roadLength) + 20;
         <p class="navy" style="margin:0;font-size:clamp(24px,2.8vw,38px);line-height:1.28;font-weight:500;text-wrap:pretty">“The connection between organisation and ideology is like the body and the soul. The body moves in service of the spirit, and the soul makes its home in the body.”</p>
         <p class="body" style="margin:28px 0 0;line-height:1.7;max-width:640px">HOPE is both a movement and a school of thought. Our structure welcomes everyone who believes in inclusivity; our ideas give every member the intellectual nourishment to lead. The manifesto is our shared guide to doing that work with excellence, at every step.</p>
         <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:24px">
-          <a href="/library/hope-manifesto.pdf" target="_blank" rel="noopener" class="link-underline">Read the full manifesto</a>
+          <a href="/library/hope-manifesto-constitution.pdf" target="_blank" rel="noopener" class="link-underline">Read the full manifesto</a>
           <a href="/library/hope-brochure-2026.pdf" target="_blank" rel="noopener" class="link-underline">Download the brochure</a>
         </div>
       </div>
@@ -70,6 +70,24 @@ roadLength = Math.round(roadLength) + 20;
     <p class="muted" style="margin:0;padding:16px var(--gutter) 24px;font-size:12px;text-align:right">Flag icon by flagicons.lipis.dev (MIT). Emoji graphics by Twitter Twemoji (CC-BY 4.0).</p>
   </section>
 
+  <section class="bg-sand">
+    <div class="wrap" style="padding-top:clamp(72px,9vw,128px);padding-bottom:clamp(72px,9vw,128px)">
+      <div style="max-width:640px;margin-bottom:48px">
+        <div class="eyebrow">Section 9 · the manifesto</div>
+        <h2 class="display h2-xl" style="margin-top:10px">Our three flagship projects</h2>
+      </div>
+      <div class="grid-auto reveal" style="--min:280px;--gap:2px;border-radius:28px;overflow:hidden">
+        {flagshipProjects.map((p) => (
+          <div class="flag">
+            <div class="display d900 blue" style="font-size:22px">{p.n}</div>
+            <div class="display navy" style="margin-top:14px;font-size:28px;line-height:1.1">{p.t}</div>
+            <p class="muted" style="margin:14px 0 0;font-size:15px;line-height:1.6">{p.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="wrap" style="padding-top:clamp(72px,9vw,128px);padding-bottom:clamp(72px,9vw,128px)">
     <div style="display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:48px">
       <h2 class="display h2">Milestones</h2>
@@ -98,6 +116,7 @@ roadLength = Math.round(roadLength) + 20;
 </Base>
 
 <style>
+  .flag { background: #fff; padding: clamp(24px,3.4vw,40px); overflow: hidden; min-width: 0; border: 1px solid var(--line); }
   .pil { background: rgba(255,255,255,.06); padding: clamp(28px,4vw,56px); overflow: hidden; min-width: 0; }
   .pil-word { font-family: var(--display); font-weight: 900; font-size: clamp(30px,4.2vw,52px); line-height: 1.05; text-transform: uppercase; overflow-wrap: break-word; }
   .pil p { margin: 20px 0 0; font-size: 16px; line-height: 1.65; color: rgba(255,255,255,.84); }

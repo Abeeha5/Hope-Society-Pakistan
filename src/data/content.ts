@@ -55,22 +55,32 @@ export const milestones: { y: string; icon: string; items: string[] }[] = [
 
 export const chairman = { name: 'Husayn Paras Naqvi', role: 'Chairman, Hope Society Pakistan', bio: 'Founder of Hope Society Pakistan and author of its manifesto.', photo: '/images/chairman.png' as string | undefined };
 
+export const president = { name: 'Muhammad Ajmal', role: 'President, Federal Cabinet', term: '2025–2026', bio: 'Heads the Federal Cabinet and its annual national plan, and represents HOPE at the national and international level.', photo: '/images/president.jpeg' as string | undefined };
+
+export const formerPresident = { name: 'Mashhood Hasan', role: 'President, Federal Cabinet', term: '2024–2025', photo: '/images/president_old.jpeg' as string | undefined };
+
 // TODO: fill in real names and photos, then bring back photo frames in team.astro
 export const cabinet: { n: string; r: string; b: string; photo?: string }[] = [
-  ['President', 'Leads the federal cabinet and the society’s annual program.'],
-  ['Vice President', 'Supports the president and steps in across chapters.'],
+  ['Vice President', 'Deputy head of the federal cabinet; steps in across provinces, chapters and embassies.'],
   ['Federal Chief Coordinator', 'Coordinates provinces, chapters and embassies.'],
-  ['Finance & Publication Coordinator', 'Budgets, sponsorships and the yearly newsletter.'],
+  ['Finance Coordinator', 'Budgets, sponsorships and financial transparency.'],
+  ['Publication Coordinator', 'The yearly newsletter and the magazine.'],
   ['Writing & Reading Club Coordinator', 'Book circles, essay contests and literary events.'],
   ['Poetry Club Coordinator', 'Mushairas and the Iqbal Festival poetry track.'],
   ['Music Club Coordinator', 'Performances and cultural evenings.'],
   ['Art Club Coordinator', 'Exhibitions, calligraphy and visual campaigns.'],
-  ['Dramatics Club Coordinator', 'Stage plays and street theatre with a message.'],
-  ['Information & Outreach Coordinator', 'Partnerships with institutions.'],
-  ['Media Club Coordinator', 'Leads Hope Media Cell and all coverage.'],
-  ['Peace League Coordinator', 'Sports, plantation drives, peace walks and cleanliness drives.'],
-  ['Technical & Innovation Coordinator', 'Leads the Technical Experts department and digital tools.'],
+  ['Information Coordinator', 'Member records and verification of institutional affiliation.'],
+  ['Outreach Coordinator', 'Membership drives and partnerships with institutions.'],
+  ['Media Cell Coordinator', 'Leads Hope Media Cell and all coverage.'],
+  ['Peace League Coordinator', 'Volunteer drives, sports, plantation drives, peace walks and cleanliness drives.'],
 ].map(([r, b]) => ({ n: 'Member name', r, b }));
+
+/** Section 9 of the Manifesto: the Society's three flagship projects. */
+export const flagshipProjects = [
+  { n: '01', t: 'Leadership Development', d: 'Training young people to lead with integrity, teamwork and service, through the Peacemaker and Khudi fellowships, Shaheen Kadah, the School of Hope and leadership bootcamps.' },
+  { n: '02', t: 'Literary Skills', d: 'Building the ability to read, write and express ideas through the Writing & Reading Club and the Poetry Club: fellowships, writers camps and clinics, the magazine, competitions, exhibitions and book circles.' },
+  { n: '03', t: 'Youth Independence Program', d: 'Helping young people grow into self-reliant citizens, through AI fellowships, financial literacy, earning-with-skill training and the pre-marriage fellowship.' },
+];
 
 export const advisors: { n: string; r: string; photo?: string }[] = ['Education', 'Civil society', 'Media', 'Public policy'].map((r) => ({ n: 'Advisor name', r: 'Advisor · ' + r }));
 
